@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE project> 
+<project name="WXMon" default="build" basedir=".">
+<property name="src" value="src"/>
+<property name="dist" value="dist"/>
+<property name="desktop" value="C:/Documents and Settings/Dave/Desktop/"/>	
+
+	<target name="build">
+		<jar jarfile="${desktop}WXMon.jar">
+			<fileset dir="." />
+			<manifest>
+			<attribute name="Main-Class" value="MainPack.WXMonMain" />
+			</manifest>
+	    </jar>
+	</target>
+	<target name="clean">
+		<delete dir="${classes}" verbose="true"/>
+		<delete file="${desktop}WXMon.jar" verbose="true"/>
+		<delete file="./wximage.jpg" verbose="true"/>
+	</target>
+</project>
