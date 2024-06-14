@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:oxm="http://www.springframework.org/schema/oxm"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
+		http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
+        http://www.springframework.org/schema/oxm
+        http://www.springframework.org/schema/oxm/spring-oxm-4.1.xsd">
+
+    <context:annotation-config/>
+    <tx:annotation-driven/>
+    <aop:aspectj-autoproxy/>
+
+    <bean id="configMgr" class="config.ConfigurationManager" />
+    <context:property-placeholder
+            properties-ref="configMgr" location="classpath*:config.xml"/>
+
+    <context:component-scan base-package="beans.control, jmsStuff"/>
+    <bean id="taskTest" class="beans.control.TaskTest"/>
+
+    <bean id="messageFactory" class="org.springframework.ws.soap.saaj.SaajSoapMessageFactory">
+        <property name="messageFactory">
+            <bean class="com.sun.xml.messaging.saaj.soap.ver1_1.SOAPMessageFactory1_1Impl"/>
+        </property>
+    </bean>
+
+    <bean id="webServiceTemplate" class="org.springframework.ws.client.core.WebServiceTemplate">
+        <constructor-arg ref="messageFactory"/>
+        <property name="defaultUri" value="http://localhost:8080/SpringWSProject-0.0.1-SNAPSHOT/spring-ws/services"/>
+        <property name="marshaller" ref="jaxb2Marshaller"/>
+        <property name="unmarshaller" ref="jaxb2Marshaller"/>
+    </bean>
+
+    <oxm:jaxb2-marshaller id="jaxb2Marshaller" context-path="jaxb" />
+    <!--<bean id="jaxb2Marshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">-->
+    <!--<property name="contextPath" value="jaxb"/>-->
+
+    <!--<property name="schemas" value="classpath*:/**/xsds/*.xsd"/>-->
+    <!--</bean>-->
+
+
+</beans>

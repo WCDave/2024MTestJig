@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+	<context-param>
+		<param-name>org.jboss.jbossfaces.WAR_BUNDLES_JSF_IMPL</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	<context-param>
+		<param-name>Identifier</param-name>
+		<param-value>KBTV</param-value>
+	</context-param>
+	<context-param>
+		<param-name>org.apache.myfaces.NUMBER_OF_VIEWS_IN_SESSION</param-name>
+		<param-value>5</param-value>
+	</context-param>
+    <context-param>
+        <param-name>org.jboss.jbossfaces.JSF_CONFIG_NAME</param-name>
+        <param-value>mojarra-1.2_05</param-value>
+    </context-param>
+
+
+	<session-config>
+		<session-timeout>30000</session-timeout>
+	</session-config>
+
+	<context-param>
+		<param-name>com.icesoft.faces.heartbeatInterval</param-name>
+		<param-value>2000</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>com.icesoft.faces.heartbeatTimeout</param-name>
+		<param-value>60000</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>com.icesoft.faces.heartbeatRetries</param-name>
+		<param-value>70</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>com.icesoft.faces.connectionTimeout</param-name>
+		<param-value>600000</param-value>
+	</context-param>
+
+
+
+
+	<!--
+		To allow multiple windows for a single application, concurrent DOM
+		views must be enabled.
+	-->
+	<!--
+		This is explicitly disabled to prevent the following icefaces bug
+		(http://jira.icefaces.org/browse/ICE-2206)
+	-->
+	<context-param>
+		<param-name>com.icesoft.faces.concurrentDOMViews</param-name>
+		<param-value>false</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>com.icesoft.faces.synchronousUpdate</param-name>
+		<param-value>false</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+		<param-value>server</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>com.sun.faces.enableRestoreView11Compatibility</param-name>
+		<param-value>true</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>javax.faces.DEFAULT_SUFFIX</param-name>
+		<param-value>.jspx</param-value>
+	</context-param>
+
+	<servlet>
+		<servlet-name>Faces Servlet</servlet-name>
+		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+		<init-param>
+			<param-name>config</param-name>
+			<param-value>/WEB-INF/faces-config.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet>
+		<servlet-name>Persistent Faces Servlet</servlet-name>
+		<servlet-class>
+			com.icesoft.faces.webapp.xmlhttp.PersistentFacesServlet</servlet-class>
+		<load-on-startup> 1 </load-on-startup>
+	</servlet>
+
+	<servlet>
+		<servlet-name>Blocking Servlet</servlet-name>
+		<servlet-class>com.icesoft.faces.webapp.xmlhttp.BlockingServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>Persistent Faces Servlet</servlet-name>
+		<url-pattern>*.iface</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>Blocking Servlet</servlet-name>
+		<url-pattern>/block/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>Persistent Faces Servlet</servlet-name>
+		<url-pattern>/xmlhttp/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>*.faces</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>/faces/*</url-pattern>
+	</servlet-mapping>
+
+
+
+
+
+
+	<servlet>
+		<servlet-name>TestServlet</servlet-name>
+		<servlet-class>servlets.TestServlet</servlet-class>
+		<init-param>
+			<param-name>Identifier</param-name>
+			<param-value>KPHL</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TestServlet</servlet-name>
+		<url-pattern>/TestServlet</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>RocketDataServlet</servlet-name>
+		<servlet-class>servlets.RocketDataServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RocketDataServlet</servlet-name>
+		<url-pattern>/RocketDataServlet</url-pattern>
+	</servlet-mapping>
+
+	<filter>
+		<filter-name>IdentFilter</filter-name>
+		<filter-class>servlets.IdentFilter</filter-class>
+		<init-param>
+			<param-name>identifier</param-name>
+			<param-value>KPHL</param-value>
+		</init-param>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>IdentFilter</filter-name>
+		<url-pattern>*.iface</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>IdentFilter</filter-name>
+		<url-pattern>/TestServlet</url-pattern>
+	</filter-mapping>
+
+
+
+
+
+	<!--
+		<welcome-file-list> <welcome-file>index.jsp</welcome-file>
+		</welcome-file-list> <login-config> <auth-method>BASIC</auth-method>
+		</login-config>
+	-->
+	<listener>
+		<listener-class>appMonitor.StartupListener</listener-class>
+	</listener>
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/applicationContext.xml
+		</param-value>
+	</context-param>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+
+	<listener>
+		<listener-class>com.icesoft.faces.webapp.http.servlet.SessionDispatcher$Listener</listener-class>
+	</listener>
+
+	<listener>
+		<listener-class>com.icesoft.faces.util.event.servlet.ContextEventRepeater</listener-class>
+	</listener>
+
+	<listener>
+		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+	</listener>
+
+</web-app>

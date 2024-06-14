@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+
+<f:view xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+	<ice:outputStyle href="css/Style.css" />
+	
+	<ice:form id="f1" partialSubmit="true">
+
+
+
+		<ice:graphicImage id="image1" alt="#{testBean.imageName}"
+			value="#{testBean.bar}" title="#{testBean.imageName}"
+			style="border: thin solid yellow">
+		</ice:graphicImage>
+
+		<ice:commandLink id="cmdlnk1">
+			<ice:graphicImage id="image2" alt="jsf-sun" url="#{testBean.psImage}"
+				style="border: 20px solid blue" height="700" width="700">
+			</ice:graphicImage>
+		</ice:commandLink>
+		<br />
+		<ice:inputText id="lll" value="#{testBean.testingString}"
+			valueChangeListener="#{testBean.updateImage}" size="10"
+			partialSubmit="true" ></ice:inputText>
+		<ice:inputText value="#{testBean.number}" size="10" styleClass="dave"></ice:inputText>
+
+		<br />
+
+		<ice:outputText value="#{testBean.testingString}"></ice:outputText>
+
+	</ice:form>
+	
+
+</f:view>
+
+

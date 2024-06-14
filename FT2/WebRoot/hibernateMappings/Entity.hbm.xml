@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="domain.Entity" table="ENTITY" schema="CLASSICCARS">
+		<id name="pid" type="java.lang.Long">
+			<column name="PID" />
+			<generator class="sequence">
+				<param name="sequence">CLASSICCARS.ENTITY_SEQ</param>
+			</generator>
+		</id>
+
+		<property name="DOB" type="java.util.Date">
+			<column name="DOB" />
+		</property>
+
+		<property name="DOD" type="java.util.Date">
+			<column name="DOD" />
+		</property>
+
+		<property name="entityName" type="java.lang.String">
+			<column name="ENTITYNAME" />
+		</property>
+		
+		<set name="addresses" lazy="false" cascade="all-delete-orphan,save-update">
+			<key>
+				<column name="ENTITY_PID" />
+			</key>
+			<one-to-many class="domain.Address"  />
+		</set>
+
+		<joined-subclass name="domain.Customer" table="CUSTOMER"
+			schema="CLASSICCARS">
+			<key column="CUSTOMERNUMBER" />
+
+			<property name="customerName" type="java.lang.String">
+				<column name="CUSTOMERNAME" length="50" />
+			</property>
+
+			<property name="contactLastName" type="java.lang.String">
+				<column name="CONTACTLASTNAME" length="50" />
+			</property>
+
+			<property name="contactFirstName" type="java.lang.String">
+				<column name="CONTACTFIRSTNAME" length="50" />
+			</property>
+
+			<property name="phone" type="java.lang.String">
+				<column name="PHONE" length="50" />
+			</property>
+
+			<property name="salesRepEmployeeNumber" type="java.lang.Long">
+				<column name="SALESREPEMPLOYEENUMBER" />
+			</property>
+
+			<property name="creditLimit" type="java.math.BigDecimal">
+				<column name="CREDITLIMIT" precision="22" scale="0" />
+			</property>
+
+			<set name="payments" >
+				<key>
+					<column name="CUSTOMERNUMBER" not-null="true" />
+				</key>
+				<one-to-many class="domain.Payment" />
+			</set>
+		</joined-subclass>
+
+		<joined-subclass name="domain.Office" table="OFFICE"
+			schema="CLASSICCARS">
+			<key column="ENTITY_PID" />
+
+			<property name="phone" type="java.lang.String">
+				<column name="PHONE" length="50" />
+			</property>
+
+			<property name="territory" type="java.lang.String">
+				<column name="TERRITORY" length="10" />
+			</property>
+
+			<property name="city">
+				<column name="CITY" length="50" />
+			</property>
+			
+			<set name="employees" lazy="false">
+				<key>
+					<column name="OFFICE_PID" />
+				</key>
+				<one-to-many class="domain.Employee" />
+			</set>
+		</joined-subclass>
+
+	</class>
+</hibernate-mapping>

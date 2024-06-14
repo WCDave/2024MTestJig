@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="domain.ProviderUse" table="REQ_PROV_USE" schema="dave" abstract="true">
+		<id name="pid" type="long" column="PID">
+			<generator class="sequence">
+				<param name="sequence">dave.REQ_PROV_USE_SEQ</param>
+			</generator>
+		</id>
+		
+		<discriminator column="PARENT_DESCR" type="string" />
+		
+		<many-to-one name="provider" class="domain.Provider" column="PROV_PID" lazy="false"/>
+		<many-to-one name="use" class="domain.Use" column="USE_PID" lazy="false"/>
+		
+		<subclass name="domain.RequestProviderUse" extends="ProviderUse"
+			discriminator-value="R">
+			<many-to-one name="request" class="domain.Request"
+				column="PARENT_OBJECT_PID" lazy="false" />
+		</subclass>
+
+		<subclass name="domain.RequestItemDetailProviderUse" extends="ProviderUse"
+			discriminator-value="D">
+			<many-to-one name="requestItemDetail" class="domain.RequestItemDetail"
+				column="PARENT_OBJECT_PID" lazy="false" />
+		</subclass>
+		
+	</class>
+</hibernate-mapping>

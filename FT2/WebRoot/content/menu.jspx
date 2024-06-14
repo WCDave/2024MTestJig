@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<f:view xmlns:f="http://java.sun.com/jsf/core"
+	    xmlns:h="http://java.sun.com/jsf/html"
+	    xmlns:ice="http://www.icesoft.com/icefaces/component"
+	    xmlns:c="http://java.sun.com/jsp/jstl/core"
+	    xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+	<ice:outputStyle href="./xmlhttp/css/xp/xp.css" />
+	<ice:outputStyle href="css/Style.css" />
+
+
+	<ice:form id="fmenu">
+
+		<ice:panelGroup	id="gr1" style="height:54px;width:99.8%;background-color:red;padding: 2px;"
+			effect="#{mainControlBean.valueChangeEffect}">
+			<ice:panelGrid id="gd1" columns="2" columnClasses="alignLeft,alignRight" style="width:inherit;height:30px;">				
+				
+					<ice:selectOneRadio id="c1" value="#{mainControlBean.selectedPage}"
+						valueChangeListener="#{mainControlBean.effectChangeListener}"
+						partialSubmit="true" layout="lineDirection" style="border: ridge thick; background-color: fuchsia;">
+						<f:selectItems id="SlctDrkItms" value="#{mainControlBean.pages}" />
+					</ice:selectOneRadio>				
+				
+					<ice:panelSeries id="c2" var="page"
+						value="#{mainControlBean.pageHistoryList}" varStatus="stat">
+						<ice:commandButton id="b1" actionListener="#{mainControlBean.breadCrumbChangeListener}"	value="#{page}" partialSubmit="true" >
+							<f:attribute name="pageName" value=" #{stat.index}" />
+						</ice:commandButton>
+					</ice:panelSeries>	
+				
+			</ice:panelGrid>
+		</ice:panelGroup>
+	</ice:form>
+</f:view>

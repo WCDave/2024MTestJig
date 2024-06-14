@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config
+        xmlns="http://java.sun.com/xml/ns/javaee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2.xsd"
+        version="1.2">
+    <application>
+        <!--<variable-resolver>org.springframework.web.jsf.DelegatingVariableResolver</variable-resolver>-->
+        <el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
+        <view-handler>com.icesoft.faces.facelets.D2DFaceletViewHandler</view-handler>
+    </application>
+    <converter>
+        <converter-for-class>java.lang.Integer</converter-for-class>
+        <converter-class>beans.DaveConverter</converter-class>
+    </converter>
+
+    <!-- 	<managed-bean>-->
+    <!--		<managed-bean-name>testBean</managed-bean-name>-->
+    <!--		<managed-bean-class>beans.TestBean</managed-bean-class>-->
+    <!--		<managed-bean-scope>session</managed-bean-scope>-->
+    <!--		<managed-property>-->
+    <!--			<property-name>imageList</property-name>-->
+    <!--			<value>#{imgList}</value>-->
+    <!--		</managed-property>-->
+    <!---->
+    <!--	</managed-bean>-->
+
+    <navigation-rule>
+        <from-view-id>/MyJsp.jspx</from-view-id>
+        <navigation-case>
+            <from-outcome>punt</from-outcome>
+            <to-view-id>/index.iface</to-view-id>
+            <redirect />
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>rocketData</from-outcome>
+            <to-view-id>/rocketData.iface</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/index.jspx</from-view-id>
+        <navigation-case>
+            <from-outcome>kick</from-outcome>
+            <to-view-id>/MyJsp.iface</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/rocketData.jspx</from-view-id>
+        <navigation-case>
+            <from-outcome>kick</from-outcome>
+            <to-view-id>/MyJsp.iface</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+
+    <!--<application>-->
+        <!--<el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>-->
+        <!--&lt;!&ndash;<variable-resolver>org.springframework.web.jsf.DelegatingVariableResolver</variable-resolver>&ndash;&gt;-->
+        <!--<view-handler>com.icesoft.faces.facelets.D2DFaceletViewHandler</view-handler>-->
+    <!--</application>-->
+
+    <lifecycle>
+        <phase-listener>appMonitor.MyPhaseListener</phase-listener>
+    </lifecycle>
+
+
+
+</faces-config>

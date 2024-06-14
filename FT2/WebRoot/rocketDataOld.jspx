@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h" %>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f" %>
+   
+<f:view>
+ 		
+  <html>
+  
+     <head>    
+       <meta http-equiv="refresh" content="5"/>
+       <style type="text/css" media="all">
+       @import "Style.css";
+	   </style> 
+     </head>
+      
+     <body>        
+      	<h:form>
+      	
+      	 <h:commandLink id="cmdlnk2" ><h:outputText value="dave" styleClass="jdb"></h:outputText></h:commandLink>
+      	 
+      	 <h:dataTable id="tableo" value="#{testBean.data}" var="item" border="5" headerClass="dave">
+      	 <h:column>
+      	 <f:facet name="header">
+			  <h:outputText value="Rocket Data" />
+		 </f:facet>
+         <h:dataTable id="tablei" value="#{testBean.keyList}" var="key" border="5" rowClasses="row1,row2">
+         	
+         	
+			  <h:column>			    
+			      <h:outputText value="#{key}" styleClass="col1"/>			    
+			  </h:column>
+			  
+			  <h:column>			    
+			      <h:outputText value="#{item[key]}" />			    
+			  </h:column>
+			  
+	    	
+	     </h:dataTable>
+	     </h:column> 
+	     </h:dataTable>  
+	         <h:commandLink id="cmdlnk1" action="#{testBean.getRetString}" ><h:outputText value="ret" styleClass="jdb"></h:outputText></h:commandLink>
+        </h:form>
+     </body>
+     
+  </html>
+</f:view>
+

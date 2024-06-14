@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+	
+<hibernate-mapping>
+	<class name="domain.Address" table="ADDRESS" schema="CLASSICCARS">
+		<id name="pid" type="java.lang.Long">
+			<column name="PID" />
+			<generator class="sequence">
+				<param name="sequence">CLASSICCARS.ADDRESS_SEQ</param>
+			</generator>
+		</id>
+		<property name="addressType" type="java.lang.String">
+			<column name="ADDRESSTYPE" length="10" />
+		</property>
+		<property name="addressline1" type="java.lang.String">
+			<column name="ADDRESSLINE1" length="50" />
+		</property>
+		<property name="addressline2" type="java.lang.String">
+			<column name="ADDRESSLINE2" length="50" />
+		</property>
+		<property name="city" type="java.lang.String">
+			<column name="CITY" length="50" />
+		</property>
+		<property name="state" type="java.lang.String">
+			<column name="STATE" length="50" />
+		</property>
+		<property name="postalcode" type="java.lang.String">
+			<column name="POSTALCODE" length="15" />
+		</property>
+		<property name="country" type="java.lang.String">
+			<column name="COUNTRY" length="50" />
+		</property>
+		<property name="entityPid" type="java.lang.Long" insert="false" update="false">
+			<column name="ENTITY_PID" />
+		</property> 
+		<many-to-one name="entity" class="domain.Entity" column="ENTITY_PID" />
+	</class>
+</hibernate-mapping>

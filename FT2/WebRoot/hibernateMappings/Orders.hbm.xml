@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="domain.Purchaseorder" table="ORDERS" schema="CLASSICCARS" lazy="true">
+        <id name="purchaseordernumber" type="java.lang.Integer">
+            <column name="ORDERNUMBER" />
+            <generator class="assigned" />
+        </id>
+        <property name="orderdate" type="java.util.Date">
+            <column name="ORDERDATE" length="10" />
+        </property>
+        <property name="requireddate" type="java.util.Date">
+            <column name="REQUIREDDATE" length="10" />
+        </property>
+        <property name="shippeddate" type="java.util.Date">
+            <column name="SHIPPEDDATE" length="10" />
+        </property>
+        <property name="status" type="java.lang.String">
+            <column name="STATUS" length="15" />
+        </property>
+        <property name="comments" type="java.lang.String">
+            <column name="COMMENTS" length="32700" />
+        </property>
+        <property name="customernumber" type="java.lang.Integer">
+            <column name="CUSTOMERNUMBER" />
+        </property>
+        <bag name="orderdetails" inverse="true" lazy="true">
+            <key>
+                <column name="ORDERNUMBER" not-null="true" />
+            </key>
+            <one-to-many class="domain.Orderdetail" />
+        </bag>
+    </class>
+</hibernate-mapping>

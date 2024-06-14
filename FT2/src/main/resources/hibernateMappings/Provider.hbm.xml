@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+	
+<hibernate-mapping>
+	<class name="domain.Provider" table="Provider" schema="dave">
+		<id name="pid" type="java.lang.Long">
+			<column name="PID" />
+			<generator class="sequence">
+				<param name="sequence">dave.PROVIDER_SEQ</param>
+			</generator>
+		</id>
+		<property name="pid" column="pid" not-null="true" type="long"/>
+		<property name="id" column="ID" not-null="true" type="string"/>
+	</class>
+</hibernate-mapping>

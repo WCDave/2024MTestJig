@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="domain.Employee" table="EMPLOYEE" schema="CLASSICCARS">
+		<id name="employeenumber" type="java.lang.Long">
+			<column name="EMPLOYEENUMBER" />
+			<generator class="sequence">
+				<param name="sequence">CLASSICCARS.EMPLOYEE_SEQ</param>
+			</generator>
+		</id>
+		
+		<many-to-one name="office" class="domain.Office" fetch="select">
+			<column name="OFFICE_PID" length="10" />
+		</many-to-one>
+		
+		<property name="lastname" type="java.lang.String">
+			<column name="LASTNAME" length="50" />
+		</property>
+		
+		<property name="firstname" type="java.lang.String">
+			<column name="FIRSTNAME" length="50" />
+		</property>
+		
+		<property name="extension" type="java.lang.String">
+			<column name="EXTENSION" length="10" />
+		</property>
+		
+		<property name="email" type="java.lang.String">
+			<column name="EMAIL" length="100" />
+		</property>
+
+		<property name="jobtitle" type="java.lang.String">
+			<column name="JOBTITLE" length="50" />
+		</property>
+
+		<set name="reportTos" cascade="none" inverse="true" lazy="false"
+			batch-size="10">
+			<key column="REPORTSTO" />
+			<one-to-many class="domain.Employee" />
+		</set>
+
+		<many-to-one name="reportsto" cascade="none" lazy="false"
+			class="domain.Employee">
+			<column name="REPORTSTO" not-null="true" />
+		</many-to-one>
+
+	</class>
+</hibernate-mapping>

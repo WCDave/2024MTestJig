@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<jsp:root version="1.2" xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ice="http://www.icesoft.com/icefaces/component">
+	<jsp:directive.page contentType="text/html;charset=ISO-8859-1"
+		pageEncoding="ISO-8859-1" />
+
+
+	<html>
+		<f:view>
+			<head>
+				<link href="Style.css" rel="Stylesheet" type="text/css" />
+				<link rel='stylesheet' type='text/css'
+					href='./xmlhttp/css/xp/xp.css' />
+			</head>
+
+			<body>
+				<ice:form id="f1" >
+					<div style="padding:15px;width: 90%; overflow-x: auto; overflow-y: auto; height: 700px; background-color: gray; border: 10px solid red;">
+						<ice:outputConnectionStatus />
+						<ice:panelGroup effect="#{geneBean.effectOutputText}" visible="true"
+							style="width:95%; border:5px solid blue;margin-left:auto; margin-right:auto;color:gray;">
+
+							<ice:dataTable id="tableo" varStatus="vs" value="#{geneBean.geneList}"
+								var="item" border="3" headerClass="geneCol1, geneCol1" columnWidths="1%,99%" width="100%" >
+								<ice:column>
+									<f:facet name="header">
+										<ice:outputText id="c1" value="Row#" />
+									</f:facet>
+									<ice:outputText id="v1" value="#{vs.index}"
+										style="width:1%;" />
+								</ice:column>
+								<ice:column>
+									<f:facet name="header">
+										<ice:outputText id="c2" value="Individual" />
+									</f:facet>
+									<ice:outputText id="v2" value="#{item}" escape="false"
+										style="width:99%;" />
+								</ice:column>
+							</ice:dataTable>
+						</ice:panelGroup>
+						
+					</div>
+				</ice:form>
+			</body>
+		</f:view>
+	</html>
+</jsp:root>
+

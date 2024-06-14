@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<JSFFlowViewLayout version="1.0">
+  <Drawing gridVisible="true" snapOn="true" />
+  <JSFFlowResource path="/MyJsp.jspx" location="97,0" dimension="105,36" />
+  <JSFFlowResource path="/index.iface" location="0,111" dimension="105,36" />
+  <JSFFlowResource path="/rocketData.iface" location="180,111" dimension="134,36" />
+  <JSFFlowResource path="/index.jspx" location="359,0" dimension="100,36" />
+  <JSFFlowResource path="/MyJsp.iface" location="448,111" dimension="110,36" />
+  <JSFFlowResource path="/rocketData.jspx" location="534,0" dimension="129,36" />
+  <JSFFlowNavigationCase id="/MyJsp.jspx,/index.iface,punt,&lt;empty&gt;" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="123,36" />
+      <AbsolutePoint location="123,73" />
+      <AbsolutePoint location="52,73" />
+      <AbsolutePoint location="52,111" />
+    </AutomaticBendpoints>
+  </JSFFlowNavigationCase>
+  <JSFFlowNavigationCase id="/MyJsp.jspx,/rocketData.iface,rocketData,&lt;empty&gt;" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="176,36" />
+      <AbsolutePoint location="176,73" />
+      <AbsolutePoint location="247,73" />
+      <AbsolutePoint location="247,111" />
+    </AutomaticBendpoints>
+  </JSFFlowNavigationCase>
+  <JSFFlowNavigationCase id="/index.jspx,/MyJsp.iface,kick,&lt;empty&gt;" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="409,36" />
+      <AbsolutePoint location="409,73" />
+      <AbsolutePoint location="476,73" />
+      <AbsolutePoint location="476,111" />
+    </AutomaticBendpoints>
+  </JSFFlowNavigationCase>
+  <JSFFlowNavigationCase id="/rocketData.jspx,/MyJsp.iface,kick,&lt;empty&gt;" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="598,36" />
+      <AbsolutePoint location="598,73" />
+      <AbsolutePoint location="531,73" />
+      <AbsolutePoint location="531,111" />
+    </AutomaticBendpoints>
+  </JSFFlowNavigationCase>
+</JSFFlowViewLayout>
+

@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
+<html xmlns:ui="http://java.sun.com/jsf/facelets">
+	<head>
+		<meta http-equiv="Content-Type"
+			content="text/html; charset=ISO-8859-1">
+		<title>Insert title here</title>
+	</head>
+	<script type="text/javascript">
+	function poponload(x) {
+		testwindow = window.showModalDialog(x + "templateClient.iface", "dave",
+				"location=1,status=1,scrollbars=1,width=600,height=600");
+		testwindow.moveTo(50, 50);
+	}
+</script>
+	<ui:insert name="content">
+		<body>
+			<h2>
+				JavaScript Popup
+			</h2>
+			<a href="#"
+				onclick="var x='http://'+location.hostname+':'+location.port+location.pathname.substr(0, location.pathname.lastIndexOf('/'))+'/'; poponload(x)"
+				id="form:link1">Check Out</a>
+		</body>
+	</ui:insert>
+</html>

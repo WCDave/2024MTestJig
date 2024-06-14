@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+	            xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+	<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">	
+	<head>
+		<link rel="shortcut icon" type="image/x-icon" href="img/kb6a.jpg" />
+		<link rel="icon" type="image/x-icon" href="img/kb6a.jpg" />
+		<title>JDB Sandbox</title>
+	</head>
+			<div>
+				<div class="header">
+					<ui:insert name="header" />
+				</div>
+				<div style="border:thick solid; border-color: yellow;">
+					<ui:insert name="navigation" />
+				</div>
+				<div class="content">
+					<ui:insert name="content">
+                     Default Content
+                </ui:insert>
+				</div>
+				<div class="footer">
+					<ui:insert name="footer" />
+				</div>
+			</div>		
+	</html>
+</ui:composition>

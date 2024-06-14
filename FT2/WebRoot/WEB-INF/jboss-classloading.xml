@@ -1,0 +1,3 @@
+<classloading xmlns="urn:jboss:classloading:1.0" domain="FT.war"  parent-first="false">
+
+</classloading>

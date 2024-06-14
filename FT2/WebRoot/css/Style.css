@@ -1,0 +1,66 @@
+@CHARSET "ISO-8859-1";
+
+h1 {color:red}             
+.slit {background-image: url(../img/slit.PNG); color:yellow;font:700 12pt arial ; overflow-y:auto; overflow-x:auto;}
+.dt {width:100%}
+.jdb {background: #FFFA00;}
+.col1 {font-weight:bold; text-align:left; border:none;}
+	
+.row1 {color:black; background-color: rgb(255,0,0);border:none;}
+.row2 {color:black; background-color: yellow;border:none;}
+
+.geneCol1 {text-align:left;}
+
+.alignRight
+{
+	border:thin solid;
+	border-color:lime;	
+	background-color: gray;	
+}
+	
+.alignLeft
+{	
+	border:thick;
+	border-color: yellow;
+	background-color: silver;
+	width:10%;	
+}
+
+h1 {
+	color: red;
+}
+
+p {
+	color: blue;
+}
+
+body {background-color: black;}
+body.kb {
+	background-image: url(../img/kandi_ride.jpg);
+	background-attachment: scroll;
+}
+
+.dave {
+	background-image: url(../img/ygxg-1646.jpg.jpeg);
+}
+
+.jdb {
+	background: #FFFA00;
+}
+
+br {
+	color: blue;
+}
+
+.iceDatTblBlkTd {
+    visibility:hidden;
+    background-image:none;
+    border: none;
+    width:0px;
+}
+.iceDatTblCol, .iceDatTblCol1, .iceDatTblCol2{
+	
+	border:none;	
+}
+
+            

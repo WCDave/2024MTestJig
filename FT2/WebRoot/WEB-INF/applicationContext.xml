@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:task="http://www.springframework.org/schema/task"
+
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.1.xsd
+		http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
+		http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
+        http://www.springframework.org/schema/task
+        http://www.springframework.org/schema/task/spring-task-4.1.xsd
+        ">
+
+	<context:annotation-config />
+	<tx:annotation-driven  transaction-manager="transactionManager"/>
+	<aop:aspectj-autoproxy />
+
+    <context:component-scan base-package="beans.control"/>
+    <bean id="taskTest" class="beans.control.TaskTest"/>
+
+    <task:annotation-driven/>
+
+    <bean id="transactionManager" class="org.springframework.transaction.jta.JtaTransactionManager"/>
+    <!--<tx:jta-transaction-manager />-->
+    <jee:jndi-lookup id="jndiDataSource" jndi-name="XAOracleDS" />
+
+
+    <bean id="configMgr" class="config.ConfigurationManager" />
+	<context:property-placeholder properties-ref="configMgr" />
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="properties">
+            <value>configMgr</value>
+        </property>
+        
+    </bean>
+
+	<!--<bean id="propConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">-->
+		<!--<property name="properties" value="configMgr" />-->
+	<!--</bean>-->
+
+	<util:list id="imgList" scope="singleton">
+		<value>img/kandi_ride.jpg</value>
+		<value>img/chbonus_nov024.jpg</value>
+		<value>img/vlcsnap-13073836.png</value>
+		<value>img/ygxg-1646.jpg.jpeg</value>
+		<value>img/vlcsnap-7460070.png</value>
+		<value>img/cb2_178946.jpg</value>
+	</util:list>
+
+	<bean id="testBean" class="beans.TestBean" scope="session">
+		<property name="imageList">
+			<ref bean="imgList" />
+		</property>
+	</bean>
+
+	<bean id="mainControlBean" class="beans.control.MainControllerBean"
+		scope="session" />
+
+	<bean id="renderMgr" class="com.icesoft.faces.async.render.RenderManager"
+		scope="singleton" />
+
+	<bean id="geneBean" class="beans.GeneBean" scope="session" />
+	<bean id="popUpBean" class="beans.PopUpBean" scope="session" />
+	<bean id="dataBean" class="beans.DataBean" scope="session">
+		<constructor-arg ref="popUpBean" />
+        <constructor-arg ref="restRocketData"/>
+	</bean>
+	<bean id="rocketConsole" class="jmsStuff.RocketConsole" scope="singleton" />
+    <bean id="rocketConsole2" class="jmsStuff.RocketConsole2" scope="singleton" />
+    <bean id="restRocketData" class="jmsStuff.RocketConsoleREST"/>
+
+
+
+	<!--
+		<bean id="jndiDataSource"
+		class="org.springframework.jndi.JndiObjectFactoryBean"> <property
+		name="jndiName"> <value>${jndiName}</value> </property> </bean>
+	-->
+
+
+	<!--
+		<bean id="myDataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="url"> <value>${db.url}</value> </property> <property
+		name="driverClassName"> <value>${db.driver}</value> </property>
+		<property name="username"> <value>${db.username}</value> </property>
+		<property name="password"> <value>${db.password}</value> </property>
+		</bean>
+	-->
+
+
+    <bean id="messageFactory" class="org.springframework.ws.soap.saaj.SaajSoapMessageFactory">
+        <property name="messageFactory">
+            <bean class="com.sun.xml.messaging.saaj.soap.ver1_1.SOAPMessageFactory1_1Impl"/>
+        </property>
+    </bean>
+
+    <bean id="webServiceTemplate" class="org.springframework.ws.client.core.WebServiceTemplate" depends-on="jaxb2Marshaller">
+        <constructor-arg ref="messageFactory"/>
+        <property name="defaultUri" value="http://localhost:8080/SpringWSProject-0.0.1-SNAPSHOT/spring-ws/services"/>
+        <property name="marshaller" ref="jaxb2Marshaller"/>
+        <property name="unmarshaller" ref="jaxb2Marshaller"/>
+    </bean>
+
+	<bean id="jaxb2Marshaller"
+		  class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+		<!--<property name="schema" value="classpath:myschema.xsd"/>-->
+		<property name="contextPath" value="jaxb"/>
+
+	</bean>
+
+	<!--<oxm:jaxb2-marshaller id="jaxb2Marshaller" context-path="jaxb"/>-->
+
+	<bean id="eventListener" class="beans.TestEventListener" />
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+<!--		<property name="dataSource" ref="jndiDataSource" />-->
+<!--		<property name="eventListeners">-->
+<!--			<map>-->
+<!--				<entry key="pre-delete" value-ref="eventListener"/>-->
+
+<!--				<entry key="post-insert" value-ref="eventListener"/>-->
+
+<!--				<entry key="pre-collection-remove" value-ref="eventListener"/>-->
+
+<!--				<entry key="post-collection-remove" value-ref="eventListener"/>-->
+
+<!--			</map>-->
+<!--		</property>-->
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+                <!--<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2.ddl.auto}</prop>-->
+				<prop key="hibernate.cache.use_second_level_cache">false</prop>
+				<prop key="hibernate.cache.use_query_cache">false</prop>
+				<prop key="hibernate.connection.release_mode">after_transaction</prop>
+			</props>
+		</property>
+<!--		<property name="mappingLocations">-->
+<!--            <list>-->
+<!--                <value>classpath*:/**/hibernateMappings/*.hbm.xml</value>-->
+<!--               <value>/resources/hibernateMappings/*.hbm.xml</value>-->
+<!--            </list>-->
+<!--			&lt;!&ndash; <value>x</value>  &ndash;&gt;-->
+<!--		</property>-->
+	</bean>
+
+	<bean id="prodDao" class="domain.ProductDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="purchaseOrderDAO" class="domain.PurchaseorderDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="orderDetailDAO" class="domain.OrderdetailDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="personnelFacade" class="domain.PersonnelFacadeImpl">
+		<property name="personnelDao" ref="personnelDao"></property>
+	</bean>
+
+	<bean id="personnelDao" class="domain.PersonnelDao">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="genericRepository" class="hibernate.GenericRepository">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="genericFacade" class="domain.GenericFacade">
+		<property name="genericRepository" ref="genericRepository" />
+	</bean>
+
+	<!--<bean id="transactionManager"-->
+		<!--class="org.springframework.orm.hibernate3.HibernateTransactionManager">-->
+		<!--<property name="sessionFactory" ref="sessionFactory" />-->
+	<!--</bean>-->
+
+	<bean id="hibernateConfig"
+		class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+		<property name="targetObject">
+			<ref bean="&amp;sessionFactory" />
+		</property>
+		<property name="targetMethod">
+			<value>getConfiguration</value>
+		</property>
+	</bean>
+</beans>

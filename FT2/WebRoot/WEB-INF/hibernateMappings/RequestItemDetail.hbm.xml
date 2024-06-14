@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+	
+<hibernate-mapping>
+	<class name="domain.RequestItemDetail" table="REQUEST_ITEM_DETAIL" schema="dave">
+		<id name="pid" type="java.lang.Long">
+			<column name="PID" />
+			<generator class="sequence">
+				<param name="sequence">dave.REQUEST_ITEM_DETAIL_SEQ</param>
+			</generator>
+		</id>
+		<many-to-one name="requestItem" class="domain.RequestItem" column="REQ_ITEM_PID" lazy="false"/>
+	</class>
+</hibernate-mapping>

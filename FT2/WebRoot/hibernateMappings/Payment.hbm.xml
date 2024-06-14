@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="domain.Payment" table="PAYMENT" schema="CLASSICCARS" lazy="false">
+        <id name="pid" type="java.lang.Long">
+            <column name="PID"/>
+            <generator class="sequence">
+                <param name="sequence">CLASSICCARS.PAYMENT_SEQ</param>
+            </generator>
+        </id>
+        <property name="customerNumber" type="java.lang.Long">
+            <column name="CUSTOMERNUMBER" length="70" />
+        </property>
+        <property name="checkNumber" type="java.lang.String">
+            <column name="CHECKNUMBER" length="50" />
+        </property>
+        <property name="paymentDate" type="java.util.Date">
+            <column name="PAYMENTDATE" length="10" />
+        </property>
+        <property name="amount" type="java.lang.Float">
+            <column name="AMOUNT" length="50" />
+        </property>
+        
+       <!-- <set name="customers" inverse="true" lazy="true">
+            <key>
+                <column name="CUSTOMERNUMBER" length="15" not-null="true"  />
+            </key>
+            <one-to-many class="domain.Customer" />
+        </set>  -->
+    </class>
+</hibernate-mapping>
