@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="dave"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:clc="dave">
+	<xs:element name="CalculatorRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element type="xs:float" name="firstOperand" />
+				<xs:element type="xs:float" name="secondOperand" />
+				<xs:element type="clc:operation" name="operation"
+					maxOccurs="1" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CalculatorResponse" type="xs:double" />
+	<xs:simpleType name="operation">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="add" />
+			<xs:enumeration value="subtract" />
+			<xs:enumeration value="multiply" />
+			<xs:enumeration value="divide" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:element name="RocketDataRequest" type="xs:string"/>
+
+    <xs:element name="RocketDataResponse" type="clc:OrbitElementsType"/>
+
+    <xs:complexType name="OrbitElementsType">
+    	<xs:sequence>
+    		<xs:element name="refName" type="xs:string"/>
+    		<xs:element name="rPer" type="xs:double" />
+    		<xs:element name="vPer" type="xs:double"/>
+    		<xs:element name="rAph" type="xs:double"/>
+    		<xs:element name="vAph" type="xs:double"/>
+    		<xs:element name="ecc" type="xs:double"/>    		
+    		<xs:element name="a" type="xs:double" />
+    		<xs:element name="refX" type="xs:double"/>
+    		<xs:element name="refY" type="xs:double"/>
+    		<xs:element name="refZ" type="xs:double"/>
+    		<xs:element name="rocketX" type="xs:double"/>
+    		<xs:element name="rocketY" type="xs:double"/>
+    		<xs:element name="rocketZ" type="xs:double"/>
+    		<!-- rPer,vPer,rAph,vAph,ecc,radiusVec,a, refX, refY, refZ, refName, rocketX, rocketY, rocketZ, locMap -->
+    	</xs:sequence>
+    </xs:complexType>
+</xs:schema>

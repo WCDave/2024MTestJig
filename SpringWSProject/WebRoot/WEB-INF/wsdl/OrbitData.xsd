@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://docImpl" xmlns:db="http://docImpl" elementFormDefault="qualified">
+	<xs:element name="planet-name" >
+		<xs:complexType mixed="true"/>
+	</xs:element>
+	<xs:element name="planet-list">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="db:planet-name"/>
+			</xs:sequence>
+			<xs:attribute name="eccentricity" type="xs:double" use="required"/>
+			<xs:attribute name="true-anamoly" type="xs:double" use="required" fixed="0.0"/>
+			<xs:attribute name="ascending-node" type="xs:double" use="required"/>
+			<xs:attribute name="inclination" type="xs:double" use="required"/>
+			<xs:attribute name="mean-anamoly" type="xs:double" use="required" fixed="0.0"/>
+			<xs:attribute name="rotational-period" type="xs:double" use="required"/>
+			<xs:attribute name="radius" type="xs:double" use="required"/>
+			<xs:attribute name="oblateness" type="xs:double" use="required"/>
+			<xs:attribute name="obliquity" type="xs:double" use="required"/>
+			<xs:attribute name="atmo" type="xs:double" use="required"/>
+			<xs:attribute name="semi-major-axis" type="xs:double" use="required"/>
+			<xs:attribute name="mass" type="xs:double" use="required"/>
+			<xs:attribute name="arg-of-perhelion" type="xs:double" use="required"/>
+			<xs:attribute name="dm" type="xs:double" use="required"/>
+			<xs:attribute name="period" type="xs:double" use="required"/>
+			<xs:attribute name="epoch-longitude" type="xs:double" use="required"/>
+			<!-- xs:attribute name="xsi:type" type="xs:double" use="required" fixed="java:Orbits.Planet" /> -->
+			<xs:attribute name="perihelion-angle" type="xs:double" use="required"/>
+			<xs:attribute name="mean-anamoly0" type="xs:double" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="solar-system">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="db:planet-list" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xs:schema xmlns:st="http://stars" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://stars">
+	<xs:element name="array-list" type="st:array-listType"/>
+	<xs:complexType name="starType">
+		<xs:sequence>
+			<xs:element name="x" type="xs:float"/>
+			<xs:element name="brightness" type="xs:float"/>
+			<xs:element name="z" type="xs:float"/>
+			<xs:element name="y" type="xs:float"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="array-listType">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="star" type="st:starType"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
