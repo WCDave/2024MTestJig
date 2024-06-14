@@ -1,0 +1,60 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>jdb</groupId>
+	<artifactId>jdb-parent</artifactId>
+	<packaging>pom</packaging>
+	<version>1.0</version>
+	<name>Play Parent</name>
+
+	<modules>
+		<module>../Documents</module>
+        <module>../WxMon</module>
+		<module>../FT2</module>
+		<module>../SpringWSProject</module>
+        <module>../MTestJig</module>
+        <module>../SolarSystem</module>
+    </modules>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>jboss-maven-plugin</artifactId>
+					<executions>
+						<execution>
+							<phase>integration-test</phase>
+							<goals>
+								<goal>hard-deploy</goal>
+							</goals>
+							<configuration>
+								<jbossHome>C:\jboss-5.1.0.GA</jbossHome>
+								<fileName>target/FT2-0.0.1-SNAPSHOT.war</fileName>
+								<unpack>true</unpack>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+	<!-- <dependencies>
+		<dependency>
+			<groupId>org.jmock</groupId>
+			<artifactId>jmock-legacy</artifactId>
+			<version>2.5.1</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8.2</version>
+			<scope>compile</scope>
+		</dependency>
+	</dependencies>  -->
+</project>
