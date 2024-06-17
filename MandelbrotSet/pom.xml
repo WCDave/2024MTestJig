@@ -108,6 +108,7 @@
             <groupId>org.daveb.GFX</groupId>
             <artifactId>GFX</artifactId>
             <version>0.0.1-SNAPSHOT</version>
+            <type>jar</type>
         </dependency>
 
         <dependency>
