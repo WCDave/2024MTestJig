@@ -7,6 +7,7 @@ import org.easymock.EasyMock;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.modules.junit4.PowerMockRunner;
 import rocketComponents.RocketControlAdapter;
 import rocketComponents.RocketEngine;
@@ -21,6 +22,7 @@ import static org.junit.Assert.assertTrue;
 import static org.powermock.api.easymock.PowerMock.*;
 
 @RunWith(PowerMockRunner.class)
+@PowerMockIgnore({"javax.management.*", "org.apache.http.conn.ssl.*", "com.amazonaws.*", "javax.net.ssl.*","com.sun.*", "javax.swing.*"})
 //@PrepareForTest( { ChangeListener[].class })
 public class RocketControlAdapterTest {
 
