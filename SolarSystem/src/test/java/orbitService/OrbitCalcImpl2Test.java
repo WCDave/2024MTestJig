@@ -1,10 +1,8 @@
 package orbitService;
 
-import domain.SolarSystemObject;
-import orbitDataDao.IOrbitData;
-import orbitService.impl.OrbitCalcImpl2;
+import java.util.List;
+
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +10,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.net.URI;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.util.List;
+import domain.SolarSystemObject;
+import orbitDataDao.IOrbitData;
+import orbitService.impl.OrbitCalcImpl2;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
