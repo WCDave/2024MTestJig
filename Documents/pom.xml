@@ -37,6 +37,36 @@
                 </dependencies>
             </plugin> -->
 			<plugin>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-xjc-plugin</artifactId>
+				<version>3.3.0</version>
+				<executions>
+					<execution>
+						<id>xjc</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>xsdtojava</goal>
+						</goals>
+						<configuration>
+							<xsdOptions>
+								<xsdOption>
+									<xsd>${basedir}/src/main/resources/xsds/metar1_2.xsd</xsd>
+								</xsdOption>
+								<xsdOption>
+									<xsd>${basedir}/src/main/resources/xsds/OrbitData.xsd</xsd>
+								</xsdOption>
+								<xsdOption>
+									<xsd>${basedir}/src/main/resources/xsds/rocket.xsd</xsd>
+								</xsdOption>
+								<xsdOption>
+									<xsd>${basedir}/src/main/resources/xsds/stars.xsd</xsd>
+								</xsdOption>
+							</xsdOptions>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<!--<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>jaxb2-maven-plugin</artifactId>
 				<version>2.5.0</version>
@@ -55,18 +85,12 @@
 						<source>src/main/resources/xsds/rocket.xsd</source>
 						<source>src/main/resources/xsds/metar1_2.xsd</source>
 					</sources>
-					<!-- <schemaDirectory>src/main/resources/xsds</schemaDirectory>
-                    <schemaIncludes>
-                        <include>stars.xsd</include>
-                        <include>OrbitData.xsd</include>
-                        <include>rocket.xsd</include>
-						<include>metar1_2.xsd</include>
-                    </schemaIncludes> -->
+					
 					<cleanPackageDirectories>true</cleanPackageDirectories>
 					<packageLevelAnnotations>true</packageLevelAnnotations>
 					<forceRegenerate>true</forceRegenerate>
 				</configuration>
-			</plugin>
+			</plugin>-->
 		</plugins>
 	</build>
 	<properties>
@@ -74,22 +98,22 @@
 	</properties>
 	<dependencies>
 		<dependency>
-            <groupId>javax.xml.bind</groupId>
-            <artifactId>jaxb-api</artifactId>
-            <version>2.3.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish.jaxb</groupId>
-            <artifactId>jaxb-runtime</artifactId>
-            <version>2.3.2</version>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.activation</groupId>
-            <artifactId>jakarta.activation</artifactId>
-            <version>1.2.1</version>
-            <scope>runtime</scope>
-        </dependency>        
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>2.3.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jaxb</groupId>
+			<artifactId>jaxb-runtime</artifactId>
+			<version>2.3.2</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.activation</groupId>
+			<artifactId>jakarta.activation</artifactId>
+			<version>1.2.1</version>
+			<scope>runtime</scope>
+		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
