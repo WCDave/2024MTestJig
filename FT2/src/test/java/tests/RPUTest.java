@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import jdk.nashorn.internal.ir.annotations.Ignore;
 import junit.framework.Assert;
 
 import org.hibernate.LazyInitializationException;
@@ -113,7 +112,7 @@ public class RPUTest {
 	}
 	
 	@Test
-  @Ignore
+    @org.junit.Ignore
 	public void lazyInitTest()
 	{
 		Request r = new Request();
