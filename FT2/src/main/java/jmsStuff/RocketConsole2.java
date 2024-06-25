@@ -2,8 +2,9 @@ package jmsStuff;
 
 //import jaxb.RocketDataRequest;
 import enums.OrbitElementKeys;
-import jaxb.RocketDataRequest;
-import jaxb.RocketDataResponse;
+import rocket.RocketDataRequest;
+import rocket.RocketDataResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.ws.client.core.WebServiceTemplate;

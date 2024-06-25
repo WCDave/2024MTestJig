@@ -1,6 +1,5 @@
 package controllers;
 
-import dave.RocketDataResponseDocument;
 import enums.OrbitElementKeys;
 import jms.RocketConsole;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
 import java.util.Map;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
 

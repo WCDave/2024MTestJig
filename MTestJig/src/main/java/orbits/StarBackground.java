@@ -4,7 +4,6 @@ package orbits;
 import main.AbstractView;
 import main.ConfigurationManager;
 import stars.StarList;
-import stars.StarListDocument;
 import stars.StarType;
 
 //import javax.xml.XMLConstants;
@@ -53,22 +52,22 @@ public class StarBackground extends Drawable3DDecorator {
     }
   }
 
-  public static float[][] getStarDat() throws Exception {
-    String fileName = ConfigurationManager.getInstance().getProperty("STAR_FILE");
-    File inputFile = new File(fileName);
-    StarListDocument al = StarListDocument.Factory.parse(inputFile);
-    int starCount = 0;
-    float[][] starDat = new float[9100][4];
-    for (stars.StarType st : al.getStarList().getStarArray()) {
-      starDat[starCount][0] = (10 - st.getBrightness()) * 25;
-      starDat[starCount][2] = (float) (2e20 * st.getX());
-      starDat[starCount][3] = (float) (2e20 * st.getY());
-      starDat[starCount][1] = (float) (2e20 * st.getZ());
-      starCount++;
-    }
-
-    return starDat;
-  }
+//  public static float[][] getStarDat() throws Exception {
+//    String fileName = ConfigurationManager.getInstance().getProperty("STAR_FILE");
+//    File inputFile = new File(fileName);
+//    StarListDocument al = StarListDocument.Factory.parse(inputFile);
+//    int starCount = 0;
+//    float[][] starDat = new float[9100][4];
+//    for (stars.StarType st : al.getStarList().getStarArray()) {
+//      starDat[starCount][0] = (10 - st.getBrightness()) * 25;
+//      starDat[starCount][2] = (float) (2e20 * st.getX());
+//      starDat[starCount][3] = (float) (2e20 * st.getY());
+//      starDat[starCount][1] = (float) (2e20 * st.getZ());
+//      starCount++;
+//    }
+//
+//    return starDat;
+//  }
 
   public static float[][] getStarDatJaxb() throws Exception {
 

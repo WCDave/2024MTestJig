@@ -264,7 +264,7 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-			<groupId>org.daveb.Documents</groupId>
+			<groupId>org.daveb</groupId>
 			<artifactId>Documents</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			<type>jar</type>

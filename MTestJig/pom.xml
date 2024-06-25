@@ -151,12 +151,12 @@
 			<version>0.9.7</version>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-math3</artifactId>
-			<version>3.4</version>
-		</dependency>
+    <groupId>org.apache.commons</groupId>
+    <artifactId>commons-lang3</artifactId>
+    <version>3.14.0</version>
+</dependency>
 		<dependency>
-			<groupId>org.daveb.SolarSystem</groupId>
+			<groupId>org.daveb</groupId>
 			<artifactId>SolarSystem</artifactId>
 			<version>1.0-SNAPSHOT</version>
 			<type>jar</type>
@@ -259,7 +259,7 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.daveb.Documents</groupId>
+			<groupId>org.daveb</groupId>
 			<artifactId>Documents</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			<type>jar</type>
@@ -304,5 +304,5 @@
 			<artifactId>aspectjtools</artifactId>
 			<version>1.5.4</version>
 		</dependency>
-	</dependencies>
+			</dependencies>
 </project>
