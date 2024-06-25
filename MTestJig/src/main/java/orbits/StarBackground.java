@@ -1,10 +1,11 @@
 package orbits;
 
-import jaxb.StarList;
-import jaxb.StarType;
+
 import main.AbstractView;
 import main.ConfigurationManager;
+import stars.StarList;
 import stars.StarListDocument;
+import stars.StarType;
 
 //import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
@@ -74,7 +75,7 @@ public class StarBackground extends Drawable3DDecorator {
     SchemaFactory sf = SchemaFactory.newInstance("http://www.w3.org/2001/XMLSchema");
     StreamSource ss = new StreamSource(StarBackground.class.getResourceAsStream("/xsds/stars.xsd"));
     Schema schema = sf.newSchema(ss);
-    JAXBContext jaxbContext = JAXBContext.newInstance("jaxb");
+    JAXBContext jaxbContext = JAXBContext.newInstance("stars");
 
     String starData = ConfigurationManager.getInstance().getProperty("STAR_FILE");
     File inputFile = new File(starData);

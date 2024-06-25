@@ -3,10 +3,10 @@ package domain;
 
 
 
-import orbitData.PlanetDocument;
-
-import java.awt.*;
+import java.awt.Color;
 import java.util.Date;
+
+import orbitdata.Planet;
 
 public class SolarSystemObject {
 
@@ -39,43 +39,43 @@ public class SolarSystemObject {
     private double[] helioPositionVec = new double[3];
     private double[] geoPositionVec = new double[3];
 
-    public SolarSystemObject(String name, PlanetDocument.Planet.Color pColor, double eccentricity, double eccDelta, double trueAnamoly,
-                             double ascendingNode, double ascNodeDelta, double inclination, double incDelta, double meanAnamoly, double rotationalPeriod, double radius,
-                             double oblateness, double obliquity, boolean atmo, double semiMajorAxis, double smAxisDelta, double mass, double argOfPerhelion, double aopDelta,
-                             double dm, double period, double epochLongitude, double epochLongitudeDelta, double perihelionAngle, double meanAnamoly0, Date epochDateTime) {
-        this.eccentricity = eccentricity;
-        this.eccDelta = eccDelta;
-        this.trueAnamoly = trueAnamoly;
-        this.ascendingNode = ascendingNode;
-        this.ascNodeDelta = ascNodeDelta;
-        this.inclination = inclination;
-        this.incDelta = incDelta;
-        this.meanAnamoly = meanAnamoly;
-        this.rotationalPeriod = rotationalPeriod;
-        this.radius = radius;
-        this.oblateness = oblateness;
-        this.obliquity = obliquity;
-        this.atmo = atmo;
-        this.semiMajorAxis = semiMajorAxis;
-        this.smAxisDelta = smAxisDelta;
-        this.mass = mass;
-        this.argOfPerhelion = argOfPerhelion;
-        this.aopDelta = aopDelta;
-        this.dm = dm;
-        this.period = period;
-        this.epochLongitude = epochLongitude;
-        this.epochLongitudeDelta = epochLongitudeDelta;
-        this.perihelionAngle = perihelionAngle;
-        this.meanAnamoly0 = meanAnamoly0;
-        this.name = name;
-        color = new Color(pColor.getRed(), pColor.getGreen(), pColor.getBlue());
-        this.epochDateTime = epochDateTime;
-    }
+//    public SolarSystemObject(String name, PlanetDocument.Planet.Color pColor, double eccentricity, double eccDelta, double trueAnamoly,
+//                             double ascendingNode, double ascNodeDelta, double inclination, double incDelta, double meanAnamoly, double rotationalPeriod, double radius,
+//                             double oblateness, double obliquity, boolean atmo, double semiMajorAxis, double smAxisDelta, double mass, double argOfPerhelion, double aopDelta,
+//                             double dm, double period, double epochLongitude, double epochLongitudeDelta, double perihelionAngle, double meanAnamoly0, Date epochDateTime) {
+//        this.eccentricity = eccentricity;
+//        this.eccDelta = eccDelta;
+//        this.trueAnamoly = trueAnamoly;
+//        this.ascendingNode = ascendingNode;
+//        this.ascNodeDelta = ascNodeDelta;
+//        this.inclination = inclination;
+//        this.incDelta = incDelta;
+//        this.meanAnamoly = meanAnamoly;
+//        this.rotationalPeriod = rotationalPeriod;
+//        this.radius = radius;
+//        this.oblateness = oblateness;
+//        this.obliquity = obliquity;
+//        this.atmo = atmo;
+//        this.semiMajorAxis = semiMajorAxis;
+//        this.smAxisDelta = smAxisDelta;
+//        this.mass = mass;
+//        this.argOfPerhelion = argOfPerhelion;
+//        this.aopDelta = aopDelta;
+//        this.dm = dm;
+//        this.period = period;
+//        this.epochLongitude = epochLongitude;
+//        this.epochLongitudeDelta = epochLongitudeDelta;
+//        this.perihelionAngle = perihelionAngle;
+//        this.meanAnamoly0 = meanAnamoly0;
+//        this.name = name;
+//        color = new Color(pColor.getRed(), pColor.getGreen(), pColor.getBlue());
+//        this.epochDateTime = epochDateTime;
+//    }
 
     private double perihelionAngle;
     private double meanAnamoly0;
 
-    public SolarSystemObject(String planetName, jaxb.Planet.Color color, double eccentricity, double eccentricityDelta, double trueAnamoly, double ascendingNode,
+    public SolarSystemObject(String planetName, Planet.Color color, double eccentricity, double eccentricityDelta, double trueAnamoly, double ascendingNode,
                              double ascNodeDelta, double inclination, double inclinationDelta, double meanAnamoly, double rotationalPeriod,
                              double radius, double oblateness, double obliquity, boolean atmo, double semiMajorAxis, double semiMajorAxisDelta, double mass,
                              double argOfPerhelion, double argOfPerhelionDelta, double dm, double period, double epochLongitude, double epochLongitudeDelta, double perihelionAngle, double meanAnamoly0, Date time) {

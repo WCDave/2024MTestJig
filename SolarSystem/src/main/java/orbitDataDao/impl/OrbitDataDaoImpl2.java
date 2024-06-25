@@ -1,20 +1,22 @@
 package orbitDataDao.impl;
 
-import domain.SolarSystemObject;
-import jaxb.Planet;
-import jaxb.SolarSystem;
-import orbitDataDao.IOrbitData;
-import org.apache.log4j.Logger;
-import org.springframework.stereotype.Repository;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+
+import org.apache.log4j.Logger;
+import org.springframework.stereotype.Repository;
+
+import domain.SolarSystemObject;
+import orbitDataDao.IOrbitData;
+import orbitdata.Planet;
+import orbitdata.SolarSystem;
 
 
 @Repository("orbitDataDaoImpl2")
@@ -32,7 +34,7 @@ public class OrbitDataDaoImpl2 implements IOrbitData {
         StreamSource ss = new StreamSource(OrbitDataDaoImpl2.class.getResourceAsStream("/xsds/OrbitData.xsd"));
 
         Schema schema = sf.newSchema(ss);
-        JAXBContext jaxbContext =   JAXBContext.newInstance("jaxb");
+        JAXBContext jaxbContext =   JAXBContext.newInstance("orbitdata");
         Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
         unmarshaller.setSchema(schema);
         Object object = unmarshaller.unmarshal(inputFile);
