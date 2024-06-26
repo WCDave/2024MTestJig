@@ -7,7 +7,7 @@ import domain.impl.GridOpsImpl;
 import domain.impl.MetarWrapperImpl;
 import gfxmain.GFXException;
 import gfxmain.GFXFramework;
-import jaxb.METAR;
+import met.METAR;
 import mapUtils.MapHelper;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.context.ApplicationContext;

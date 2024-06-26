@@ -2,7 +2,7 @@ package service;
 
 
 import domain.Circle;
-import jaxb.METAR;
+import met.METAR;
 
 import java.awt.*;
 import java.awt.geom.Point2D;

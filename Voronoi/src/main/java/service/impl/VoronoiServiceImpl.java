@@ -1,14 +1,15 @@
 package service.impl;
 
 import domain.Circle;
-import jaxb.METAR;
-import jaxb.Response;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import service.IVoronoiService;
+import met.METAR;
+import met.Response;
 
 import java.awt.*;
 import java.awt.geom.Point2D;

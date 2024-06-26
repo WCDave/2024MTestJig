@@ -1,7 +1,7 @@
 package domain.impl;
 
 import domain.IMetarWrapper;
-import jaxb.METAR;
+import met.METAR;
 
 import java.awt.*;
 

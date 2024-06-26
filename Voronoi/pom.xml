@@ -14,8 +14,8 @@
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <source>22</source>
+                    <target>22</target>
                 </configuration>
             </plugin>
         </plugins>
@@ -29,17 +29,18 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>GFX</groupId>
+            <groupId>org.daveb</groupId>
             <artifactId>GFX</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-        <dependency>
-            <groupId>Documents</groupId>
+         <dependency>
+            <groupId>org.daveb</groupId>
             <artifactId>Documents</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
+       
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
