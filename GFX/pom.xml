@@ -2,9 +2,8 @@
   <modelVersion>4.0.0</modelVersion>
   
   
-  <groupId>org.daveb.GFX</groupId>
+  <groupId>org.daveb</groupId>
   <artifactId>GFX</artifactId>
-  <name>gfx</name>
   <packaging>jar</packaging>
   <version>0.0.1-SNAPSHOT</version>
   <build>

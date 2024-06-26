@@ -99,7 +99,7 @@
 	</profiles>
 	<dependencies>
 		<dependency>
-			<groupId>org.daveb.GFX</groupId>
+			<groupId>org.daveb</groupId>
 			<artifactId>GFX</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			<type>jar</type>
