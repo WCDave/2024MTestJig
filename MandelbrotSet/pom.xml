@@ -1,11 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.daveb.MandelBrot</groupId>
+	<groupId>org.daveb</groupId>
 	<artifactId>MandelBrot</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
-	<name>MandelBrot</name>
 	<url>http://maven.apache.org</url>
 	<properties>
 		<powermock.version>1.5</powermock.version>

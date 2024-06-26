@@ -2,9 +2,8 @@
   <modelVersion>4.0.0</modelVersion>
   
   
-  <groupId>WXMon</groupId>
+  <groupId>org.daveb</groupId>
   <artifactId>WXMon</artifactId>
-  <name>WXMon</name>
   <packaging>jar</packaging>
   <version>0.0.1-SNAPSHOT</version>
   <build>
