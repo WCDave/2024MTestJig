@@ -49,7 +49,8 @@
 						<configuration>
 							<xsdOptions>
 								<xsdOption>
-									<xsd>${basedir}/src/main/resources/xsds/metar1_2.xsd</xsd>
+									<packagename>met</packagename>
+									<xsd>${basedir}/src/main/resources/xsds/metar1_3.xsd</xsd>
 								</xsdOption>
 								<xsdOption>
 									<xsd>${basedir}/src/main/resources/xsds/OrbitData.xsd</xsd>
