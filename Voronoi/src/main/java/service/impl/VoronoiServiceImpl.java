@@ -45,6 +45,7 @@ public class VoronoiServiceImpl implements IVoronoiService {
   public List<METAR> callWebService() {
     List<METAR> resultList = new ArrayList<METAR>();
     String serviceURL = "http://www.aviationweather.gov/adds/dataserver_current/httpparam?";
+    String serviceURL2 ="https://aviationweather.gov/api/data/metar";
     final Map<String, String> urlVariables = new HashMap<String, String>();
 
 //    SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
@@ -70,10 +71,11 @@ public class VoronoiServiceImpl implements IVoronoiService {
 //      e.printStackTrace();
 //    }
 
-    urlVariables.put("dataSource", "metars");
-    urlVariables.put("requestType", "retrieve");
+//    urlVariables.put("dataSource", "metars");
+//    urlVariables.put("requestType", "retrieve");
     urlVariables.put("format", "xml");
     urlVariables.put("hoursBeforeNow", "1");
+    urlVariables.put("taf", "false");
     //UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(serviceURL);
 
 //    for(String key : urlVariables.keySet()) {
@@ -84,7 +86,7 @@ public class VoronoiServiceImpl implements IVoronoiService {
 
     for(Countries c : Countries.values()) {
       String countryLetter = c.toString();
-      UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(serviceURL);
+      UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(serviceURL2);
 
       for(String key : urlVariables.keySet()) {
         builder.queryParam(key, urlVariables.get(key));
@@ -96,7 +98,7 @@ public class VoronoiServiceImpl implements IVoronoiService {
       }
 
       try {
-        builder.queryParam("stationString", finalStationStaring);
+        builder.queryParam("ids", finalStationStaring);
         String urlString = builder.build().toUriString();
         ResponseEntity<Response> re = restTemplate.getForEntity(urlString, Response.class);
         resultList.addAll(re.getBody().getData().getMETAR());
