@@ -270,7 +270,7 @@
 			<scope>compile</scope>
 		</dependency>
         <dependency>
-            <groupId>WXMon</groupId>
+            <groupId>org.daveb</groupId>
             <artifactId>WXMon</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <type>jar</type>
