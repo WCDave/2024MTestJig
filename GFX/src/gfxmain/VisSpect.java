@@ -76,8 +76,8 @@ public final class VisSpect {
 	
 	public static float mapValueRangeIntoWavelengths(float value, float min, float max) {
 		float range = max - min;
-		float valuesPerBracket = range/400;
-		float result = Math.round(value*valuesPerBracket+min)+RANGE_PAIRS.get(0)[0];
+		float valuesPerBracket = 400/range;
+		float result = Math.round((value-min)*valuesPerBracket)+RANGE_PAIRS.get(0)[0];
 		return result;
 	}
 	

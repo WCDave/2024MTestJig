@@ -28,6 +28,7 @@ import domain.impl.GridOpsImpl;
 import domain.impl.MetarWrapperImpl;
 import gfxmain.GFXException;
 import gfxmain.GFXFramework;
+import gfxmain.VisSpect;
 import mapUtils.MapHelper;
 import met.METAR;
 import service.IVoronoiService;
@@ -174,7 +175,11 @@ public class MainApp extends JFrame {
     	g2.setColor(Color.red);
     	if(p != null) {
     		g2.draw(p);
-//    		g2.fill(p);
+    		float mapVal = VisSpect.mapValueRangeIntoWavelengths(m1.getMetar().getAltimInHg(), 29.0f,31f);
+    		System.out.println(m1.getMetar().getAltimInHg()+" --- "+mapVal);
+    		Color c = VisSpect.getSpectralColor(mapVal);
+    		g2.setColor(c);
+    		g2.fill(p);
     	}
 //    	
     	gfx.update();
