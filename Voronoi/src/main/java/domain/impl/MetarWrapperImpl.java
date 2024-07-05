@@ -52,12 +52,9 @@ public class MetarWrapperImpl extends Number implements IMetarWrapper {
 		}
 		List<SortablePoint> sortedPoints = new ArrayList<SortablePoint>(pointSet);
 		Collections.sort(sortedPoints);  
-//		Collections.reverse(sortedPoints);
 		for(SortablePoint p: sortedPoints) {
-			result.addPoint(p.x, p.y);
-			
+			result.addPoint(p.x, p.y);			
 		}
-//		result.addPoint(sortedPoints.get(0).x, sortedPoints.get(0).y);
 			
 		return result;
 	}
