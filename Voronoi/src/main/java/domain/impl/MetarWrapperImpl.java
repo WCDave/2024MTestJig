@@ -1,53 +1,122 @@
 package domain.impl;
 
+import domain.Edge;
 import domain.IMetarWrapper;
+import domain.SortablePoint;
 import met.METAR;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
+import VMath.VMath;
+
+import java.util.List;
 
 public class MetarWrapperImpl extends Number implements IMetarWrapper {
-  private METAR metar;
-  private Polygon polygon;
+	private METAR metar;
+	private Point gridPoint;
+	private Set<Edge> edgeSet = new HashSet<Edge>();
+	private Point centroid;
 
-  public MetarWrapperImpl(METAR metar) {
-    this.metar = metar;
-    polygon = new Polygon();
-  }
+	public MetarWrapperImpl(METAR metar) {
+		this.metar = metar;
+	}
 
-  @Override
-  public METAR getMetar() {
-    return metar;
-  }
-
-  @Override
-  public void setVoronoiPolygon(Polygon polygon) {
-    this.polygon = polygon;
-  }
-
-  @Override
-  public Polygon getVoronoiPolygon() {
-    return polygon;
-  }
+	@Override
+	public METAR getMetar() {
+		return metar;
+	}
 
 
-  @Override
-  public int intValue() {
-    return metar.getAltimInHg().intValue();
-  }
+	@Override
+	public Polygon getVoronoiPolygon() {
+		Polygon result = new Polygon();
+		
+		List<Edge> edgeList = new ArrayList<Edge>(this.edgeSet);
+		Set<SortablePoint> pointSet = new HashSet<SortablePoint>();
+		for(Edge e: edgeList) {
+			pointSet.add(new SortablePoint(e.getP1()));
+			pointSet.add(new SortablePoint(e.getP2()));
+		}
+		
+		if(pointSet.size()<=2) return null;
+		this.setCentroid(calculateCentroid(pointSet));
 
-  @Override
-  public long longValue() {
-    return metar.getAltimInHg().longValue();
-  }
+		for(SortablePoint p:pointSet) {
+			float tanAngle = (float) Math.toDegrees((float) Math.atan2(p.y - getCentroid().y, p.x - getCentroid().x));
+			tanAngle = (float) VMath.modulo(tanAngle+360,360);
+			p.setAngle(tanAngle);
+			int hh=0;
+		}
+		List<SortablePoint> sortedPoints = new ArrayList<SortablePoint>(pointSet);
+		Collections.sort(sortedPoints);  
+//		Collections.reverse(sortedPoints);
+		for(SortablePoint p: sortedPoints) {
+			result.addPoint(p.x, p.y);
+			
+		}
+//		result.addPoint(sortedPoints.get(0).x, sortedPoints.get(0).y);
+			
+		return result;
+	}
 
-  @Override
-  public float floatValue() {
-    return metar.getAltimInHg().floatValue();
-  }
+	private Point calculateCentroid(Set<? extends Point> pointSet) {
+		int i = 0;
+		Point centroid = new Point();
+		for(Point p: pointSet) {			
+			centroid.x+= p.x;
+			centroid.y+= p.y;			
+		}
+		centroid.x/=pointSet.size();
+		centroid.y/=pointSet.size();
+		return centroid;
+	}
 
-  @Override
-  public double doubleValue() {
-    return metar.getAltimInHg().doubleValue();
-  }
+	@Override
+	public int intValue() {
+		return metar.getAltimInHg().intValue();
+	}
+
+	@Override
+	public long longValue() {
+		return metar.getAltimInHg().longValue();
+	}
+
+	@Override
+	public float floatValue() {
+		return metar.getAltimInHg().floatValue();
+	}
+
+	@Override
+	public double doubleValue() {
+		return metar.getAltimInHg().doubleValue();
+	}
+
+	@Override
+	public Point getGridPoint() {
+		// TODO Auto-generated method stub
+		return gridPoint;
+	}
+
+	@Override
+	public void setGridPoint(Point p) {
+		gridPoint = p;
+	}
+
+	@Override
+	public Set<Edge> getEdges() {
+		return this.edgeSet;
+	}
+
+	public Point getCentroid() {
+		return centroid;
+	}
+
+	public void setCentroid(Point centroid) {
+		this.centroid = centroid;
+	}
 }

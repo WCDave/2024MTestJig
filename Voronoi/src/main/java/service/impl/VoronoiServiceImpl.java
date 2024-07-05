@@ -25,7 +25,8 @@ public class VoronoiServiceImpl implements IVoronoiService {
   };
 
   enum Countries {
-    K,C,T,M,P
+    K,C
+    ,T,M,P
   };
 
   @Autowired

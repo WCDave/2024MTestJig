@@ -1,6 +1,7 @@
 package main;
 
 import domain.Circle;
+import domain.Edge;
 import domain.IGridOps;
 import domain.IMetarWrapper;
 import domain.impl.GridOpsImpl;
@@ -16,11 +17,14 @@ import service.IVoronoiService;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -68,7 +72,7 @@ public class MainApp extends JFrame {
 //    Collections.shuffle(metars);
 //    metars = metars.subList(0, 20);
     grid = processMetars(metars);
-    IGridOps g = new GridOpsImpl(grid);
+    IGridOps<Number, Double> g = new GridOpsImpl<Number>(grid);
     generateCircles();
     metars = null;
 
@@ -79,7 +83,7 @@ public class MainApp extends JFrame {
       for (int j = 0; j < grid[i].length; j++) {
         if (grid[j][i] != null) {
           g2.setColor(Color.cyan);
-          g2.drawLine(j, i, j, i);
+//          g2.drawLine(j, i, j, i);
         }
       }
     }
@@ -110,21 +114,27 @@ public class MainApp extends JFrame {
           if (circleIsValid(c)) {
             if (result.add(c)) {
               for (Circle c1 : result) {
-                if (c1 != c) {
+                if (!c1.equals(c)) {
                   Collection intersection = CollectionUtils.intersection(c.getPointSet(), c1.getPointSet());
                   if (intersection.size() == 2) {
                     int[] p1 = new int[]{(int) c1.getX(), (int) c1.getY()};
                     int[] p2 = new int[]{(int) c.getX(), (int) c.getY()};
                     if (intersection.contains(pointMetarMap.get(m1))) {
-                      m1.getVoronoiPolygon().addPoint(p2[0], p2[1]);
+//                      m1.getVoronoiPolygon().addPoint(p2[0], p2[1]);
+                      m1.getEdges().add(new Edge(new Point(p1[0], p1[1]), new Point(p2[0], p2[1])));
                     }
                     if (intersection.contains(pointMetarMap.get(m2))) {
-                      m2.getVoronoiPolygon().addPoint(p2[0], p2[1]);
+//                      m2.getVoronoiPolygon().addPoint(p2[0], p2[1]);
+                      m2.getEdges().add(new Edge(new Point(p1[0], p1[1]), new Point(p2[0], p2[1])));
                     }
                     if (intersection.contains(pointMetarMap.get(m3))) {
-                      m3.getVoronoiPolygon().addPoint(p2[0], p2[1]);
+//                      m3.getVoronoiPolygon().addPoint(p2[0], p2[1]);
+                      m3.getEdges().add(new Edge(new Point(p1[0], p1[1]), new Point(p2[0], p2[1])));
                     }
-                    g2.drawLine(p1[0], p1[1], p2[0], p2[1]);
+                    
+                   
+//                    g2.setColor(Color.red);                    
+//                    g2.drawLine(p1[0], p1[1], p2[0], p2[1]);
 
 //              Point2D.Float p1 = (Point2D.Float) c.getPointSet().toArray()[0];
 //              Point2D.Float p2 = (Point2D.Float) c.getPointSet().toArray()[1];
@@ -134,7 +144,7 @@ public class MainApp extends JFrame {
 //              g2.drawLine((int) p1.getX(), (int) p1.getY(), (int) p2.getX(), (int) p2.getY());
 //              g2.drawLine((int) p1.getX(), (int) p1.getY(), (int) p3.getX(), (int) p3.getY());
 //              g2.drawLine((int) p2.getX(), (int) p2.getY(), (int) p3.getX(), (int) p3.getY());
-                    gfx.update();
+//                    gfx.update();
                     System.out.println(i + ", " + j + ", " + k + " --- " + result.size());
                   }
                 }
@@ -148,6 +158,24 @@ public class MainApp extends JFrame {
         }
       }
     }
+    g2.setColor(Color.red);
+    for (int i = 0; i < metars.size(); i++) {
+    	 g2.setColor(Color.red);
+    	IMetarWrapper m1 = metars.get(i);
+
+    	Polygon p = m1.getVoronoiPolygon();
+    	if(m1.getCentroid() != null) {
+	    	g2.setColor(Color.yellow);
+	    	g2.drawLine(m1.getCentroid().x, m1.getCentroid().y, m1.getCentroid().x, m1.getCentroid().y);
+    	}
+    	g2.setColor(Color.red);
+    	if(p != null) {
+    		g2.draw(p);
+//    		g2.fill(p);
+    	}
+//    	
+    	gfx.update();
+    }    
   }
 
   private boolean circleIsValid(Circle c) {
@@ -172,6 +200,7 @@ public class MainApp extends JFrame {
 
         mapPosition[0] = mapPosition[0] + XDISP;
         mapPosition[1] = mapPosition[1] + YDISP;
+        mw.setGridPoint(new Point(mapPosition[0], mapPosition[1]));
         System.out.println(mapPosition[0] + " " + mapPosition[1]);
 
         if (mapPosition[0] > 0 && mapPosition[0] < result.length && mapPosition[1] > 0 && mapPosition[1] < result[0].length) {

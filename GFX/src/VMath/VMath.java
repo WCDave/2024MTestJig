@@ -77,6 +77,12 @@ public final class VMath {
 		vecr[2] = vec1[0] * vec2[1] - vec1[1] * vec2[0];
 		return vecr;
 	}
+	
+	public static float crossprd2D(float[] vec1, float[] vec2) {
+		float vecr=0;
+		vecr = vec1[0] * vec2[1] - vec1[1] * vec2[0];
+		return vecr;
+	}
 
 	public static double modulo(double arg1, double arg2) {
 		double aValue = arg1 / arg2;
