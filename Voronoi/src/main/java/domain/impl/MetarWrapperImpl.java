@@ -1,20 +1,18 @@
 package domain.impl;
 
+import java.awt.Point;
+import java.awt.Polygon;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import VMath.VMath;
 import domain.Edge;
 import domain.IMetarWrapper;
 import domain.SortablePoint;
 import met.METAR;
-
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
-
-import VMath.VMath;
-
-import java.util.List;
 
 public class MetarWrapperImpl extends Number implements IMetarWrapper {
 	private METAR metar;

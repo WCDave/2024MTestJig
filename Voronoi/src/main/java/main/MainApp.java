@@ -1,5 +1,25 @@
 package main;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.Polygon;
+import java.awt.geom.Point2D;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import javax.swing.JFrame;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.GenericXmlApplicationContext;
+
 import domain.Circle;
 import domain.Edge;
 import domain.IGridOps;
@@ -8,26 +28,9 @@ import domain.impl.GridOpsImpl;
 import domain.impl.MetarWrapperImpl;
 import gfxmain.GFXException;
 import gfxmain.GFXFramework;
-import met.METAR;
 import mapUtils.MapHelper;
-import org.apache.commons.collections.CollectionUtils;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.GenericXmlApplicationContext;
+import met.METAR;
 import service.IVoronoiService;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Point2D;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 public class MainApp extends JFrame {
 
