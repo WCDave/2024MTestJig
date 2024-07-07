@@ -48,7 +48,6 @@ public class MetarWrapperImpl extends Number implements IMetarWrapper {
 			float tanAngle = (float) Math.toDegrees((float) Math.atan2(p.y - getCentroid().y, p.x - getCentroid().x));
 			tanAngle = (float) VMath.modulo(tanAngle+360,360);
 			p.setAngle(tanAngle);
-			int hh=0;
 		}
 		List<SortablePoint> sortedPoints = new ArrayList<SortablePoint>(pointSet);
 		Collections.sort(sortedPoints);  
@@ -93,7 +92,6 @@ public class MetarWrapperImpl extends Number implements IMetarWrapper {
 
 	@Override
 	public Point getGridPoint() {
-		// TODO Auto-generated method stub
 		return gridPoint;
 	}
 
