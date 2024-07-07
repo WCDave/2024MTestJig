@@ -97,6 +97,10 @@ public class VoronoiServiceImpl implements IVoronoiService {
         String letterString = letter.toString();
         finalStationStaring += countryLetter+letterString+" ";
       }
+      for(int i = 0;i<10;i++ ) {
+    	  String val = ""+i+" ";
+    	  finalStationStaring+=countryLetter+val;
+      }
 
       try {
         builder.queryParam("ids", finalStationStaring);

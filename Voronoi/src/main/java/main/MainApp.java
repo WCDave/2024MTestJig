@@ -101,9 +101,8 @@ public class MainApp extends JFrame {
   private void generateCircles() {
     Set<Circle> result = new HashSet<Circle>();
 
-    List<IMetarWrapper> metars = new ArrayList(pointMetarMap.keySet());
-    //Collections.shuffle(metars);
-    //metars = metars.subList(0, metars.size()/2);
+    List<IMetarWrapper> metars = new ArrayList<IMetarWrapper>(pointMetarMap.keySet());
+    
     Graphics2D g2 = gfx.getG2();
     g2.setColor(Color.red);
 
@@ -119,36 +118,20 @@ public class MainApp extends JFrame {
             if (result.add(c)) {
               for (Circle c1 : result) {
                 if (!c1.equals(c)) {
-                  Collection intersection = CollectionUtils.intersection(c.getPointSet(), c1.getPointSet());
+                  Collection<?> intersection = CollectionUtils.intersection(c.getPointSet(), c1.getPointSet());
                   if (intersection.size() == 2) {
                     int[] p1 = new int[]{(int) c1.getX(), (int) c1.getY()};
                     int[] p2 = new int[]{(int) c.getX(), (int) c.getY()};
                     if (intersection.contains(pointMetarMap.get(m1))) {
-//                      m1.getVoronoiPolygon().addPoint(p2[0], p2[1]);
                       m1.getEdges().add(new Edge(new Point(p1[0], p1[1]), new Point(p2[0], p2[1])));
                     }
                     if (intersection.contains(pointMetarMap.get(m2))) {
-//                      m2.getVoronoiPolygon().addPoint(p2[0], p2[1]);
                       m2.getEdges().add(new Edge(new Point(p1[0], p1[1]), new Point(p2[0], p2[1])));
                     }
                     if (intersection.contains(pointMetarMap.get(m3))) {
-//                      m3.getVoronoiPolygon().addPoint(p2[0], p2[1]);
                       m3.getEdges().add(new Edge(new Point(p1[0], p1[1]), new Point(p2[0], p2[1])));
                     }
                     
-                   
-//                    g2.setColor(Color.red);                    
-//                    g2.drawLine(p1[0], p1[1], p2[0], p2[1]);
-
-//              Point2D.Float p1 = (Point2D.Float) c.getPointSet().toArray()[0];
-//              Point2D.Float p2 = (Point2D.Float) c.getPointSet().toArray()[1];
-//              Point2D.Float p3 = (Point2D.Float) c.getPointSet().toArray()[2];
-//
-//              g2.setColor(Color.RED);
-//              g2.drawLine((int) p1.getX(), (int) p1.getY(), (int) p2.getX(), (int) p2.getY());
-//              g2.drawLine((int) p1.getX(), (int) p1.getY(), (int) p3.getX(), (int) p3.getY());
-//              g2.drawLine((int) p2.getX(), (int) p2.getY(), (int) p3.getX(), (int) p3.getY());
-//                    gfx.update();
                     System.out.println(i + ", " + j + ", " + k + " --- " + result.size());
                   }
                 }
