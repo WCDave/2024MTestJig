@@ -123,13 +123,13 @@ public class MainApp extends JFrame {
                     int[] p1 = new int[]{(int) c1.getX(), (int) c1.getY()};
                     int[] p2 = new int[]{(int) c.getX(), (int) c.getY()};
                     if (intersection.contains(pointMetarMap.get(m1))) {
-                      m1.getEdges().add(new Edge(new Point(p1[0], p1[1]), new Point(p2[0], p2[1])));
+                      m1.getEdges().add(new Edge(new Point(p1[0], p1[1]), new Point(p2[0], p2[1]), m1));
                     }
                     if (intersection.contains(pointMetarMap.get(m2))) {
-                      m2.getEdges().add(new Edge(new Point(p1[0], p1[1]), new Point(p2[0], p2[1])));
+                      m2.getEdges().add(new Edge(new Point(p1[0], p1[1]), new Point(p2[0], p2[1]), m2));
                     }
                     if (intersection.contains(pointMetarMap.get(m3))) {
-                      m3.getEdges().add(new Edge(new Point(p1[0], p1[1]), new Point(p2[0], p2[1])));
+                      m3.getEdges().add(new Edge(new Point(p1[0], p1[1]), new Point(p2[0], p2[1]), m3));
                     }
                     
                     System.out.println(i + ", " + j + ", " + k + " --- " + result.size());
@@ -192,7 +192,7 @@ public class MainApp extends JFrame {
         mapPosition[0] = mapPosition[0] + XDISP;
         mapPosition[1] = mapPosition[1] + YDISP;
         mw.setGridPoint(new Point(mapPosition[0], mapPosition[1]));
-        System.out.println(mapPosition[0] + " " + mapPosition[1]);
+//        System.out.println(mapPosition[0] + " " + mapPosition[1]);
 
         if (mapPosition[0] > 0 && mapPosition[0] < result.length && mapPosition[1] > 0 && mapPosition[1] < result[0].length) {
           pointMetarMap.put(mw, new Point2D.Float(mapPosition[0], mapPosition[1]));

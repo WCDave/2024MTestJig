@@ -53,6 +53,10 @@
 									<xsd>${basedir}/src/main/resources/xsds/metar1_3.xsd</xsd>
 								</xsdOption>
 								<xsdOption>
+									<packagename>stat</packagename>
+									<xsd>${basedir}/src/main/resources/xsds/station1_1.xsd</xsd>
+								</xsdOption>
+								<xsdOption>
 									<xsd>${basedir}/src/main/resources/xsds/OrbitData.xsd</xsd>
 								</xsdOption>
 								<xsdOption>
