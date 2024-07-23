@@ -1,20 +1,38 @@
 package service.impl;
 
-import domain.Circle;
+import java.awt.Polygon;
+import java.awt.datatransfer.StringSelection;
+import java.awt.geom.Point2D;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collector;
+import java.util.stream.Stream;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
-import service.IVoronoiService;
+
+import VMath.VMath;
+import domain.Circle;
 import met.METAR;
 import met.Response;
-
-import java.awt.*;
-import java.awt.geom.Point2D;
-import java.util.*;
-import java.util.List;
+import stat.*;
+import service.IVoronoiService;
+import stat.Station;
 
 
 @Service
@@ -43,7 +61,7 @@ public class VoronoiServiceImpl implements IVoronoiService {
   }
 
   @Override
-  public List<METAR> callWebService() {
+  public List<METAR> callWebService(List<String> stations) {
     List<METAR> resultList = new ArrayList<METAR>();
     String serviceURL = "http://www.aviationweather.gov/adds/dataserver_current/httpparam?";
     String serviceURL2 ="https://aviationweather.gov/api/data/metar";
@@ -83,34 +101,43 @@ public class VoronoiServiceImpl implements IVoronoiService {
 //      builder.queryParam(key, urlVariables.get(key));
 //    }
 
+    
+   
+    String finalStationString="";
 
-
-    for(Countries c : Countries.values()) {
-      String countryLetter = c.toString();
-      UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(serviceURL2);
-
-      for(String key : urlVariables.keySet()) {
-        builder.queryParam(key, urlVariables.get(key));
-      }
-      String finalStationStaring="";
-      for (Letters letter : Letters.values()) {
-        String letterString = letter.toString();
-        finalStationStaring += countryLetter+letterString+" ";
-      }
-      for(int i = 0;i<10;i++ ) {
-    	  String val = ""+i+" ";
-    	  finalStationStaring+=countryLetter+val;
-      }
-
-      try {
-        builder.queryParam("ids", finalStationStaring);
-        String urlString = builder.build().toUriString();
-        ResponseEntity<Response> re = restTemplate.getForEntity(urlString, Response.class);
-        resultList.addAll(re.getBody().getData().getMETAR());
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
-
+    for(int i=0;i<stations.size(); i++) {
+//    for(String s : stations) {
+//    for(Countries c : Countries.values()) {
+//      String countryLetter = c.toString();      
+//
+//      
+      
+//      for (Letters letter : Letters.values()) {
+//        String letterString = letter.toString();
+//        finalStationStaring += countryLetter+letterString+" ";
+//      }
+//      for(int i = 0;i<10;i++ ) {
+//    	  String val = ""+i+" ";
+//    	  finalStationStaring+=countryLetter+val;
+//      }
+    	finalStationString = stations.get(i)+","+finalStationString;
+    	if(VMath.modulo(i, 400) == 0 && i!= 0 ||  i == stations.size()-1) {   
+    		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(serviceURL2);
+    	    for(String key : urlVariables.keySet()) {
+    	        builder.queryParam(key, urlVariables.get(key));
+    	      }
+		      try {
+		        builder.queryParam("ids", finalStationString.substring(0,finalStationString.lastIndexOf(",")));
+		        String urlString = builder.build().toUriString();
+		        ResponseEntity<Response> re = restTemplate.getForEntity(urlString, Response.class);
+		        resultList.addAll(re.getBody().getData().getMETAR());
+		      } catch (Exception e) {
+		        e.printStackTrace();
+		      }
+		      finally {
+			      finalStationString="";      
+		      }
+    	}
     }
     return resultList;
   }
@@ -133,4 +160,29 @@ public class VoronoiServiceImpl implements IVoronoiService {
     return circle;
 
   }
+
+	@Override
+	public List<String> getStationList(String ... startsWith) throws Exception {	
+
+	    SchemaFactory sf = SchemaFactory.newInstance("http://www.w3.org/2001/XMLSchema");
+	    StreamSource ss = new StreamSource(VoronoiServiceImpl.class.getResourceAsStream("/xsds/station1_1.xsd"));
+	    Schema schema = sf.newSchema(ss);
+	    JAXBContext jaxbContext = JAXBContext.newInstance("stat");
+
+	    String starData = "stations.xml";
+	    File inputFile = new File(starData);
+
+	    Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+	    unmarshaller.setSchema(schema);
+	    Object object = unmarshaller.unmarshal(inputFile);
+	    List<Station> statList = ((stat.Response) object).getData().getStation();
+	    
+	   List<String> result = new ArrayList<String>();
+	   for(String str : startsWith) {
+		   statList.stream()
+			.filter(x-> x.getStationId() !=null && x.getStationId()
+			.startsWith(str) && x.getSiteType() != null && x.getSiteType().getMETAR() != null).forEach(s-> result.add(s.getStationId()));
+	   }
+	    return result;
+	}
 }

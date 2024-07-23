@@ -19,6 +19,7 @@ public class MetarWrapperImpl extends Number implements IMetarWrapper {
 	private Point gridPoint;
 	private Set<Edge> edgeSet = new HashSet<Edge>();
 	private Point centroid;
+	private Polygon polygon;
 
 	public MetarWrapperImpl(METAR metar) {
 		this.metar = metar;
@@ -32,30 +33,32 @@ public class MetarWrapperImpl extends Number implements IMetarWrapper {
 
 	@Override
 	public Polygon getVoronoiPolygon() {
-		Polygon result = new Polygon();
-		
-		List<Edge> edgeList = new ArrayList<Edge>(this.edgeSet);
-		Set<SortablePoint> pointSet = new HashSet<SortablePoint>();
-		for(Edge e: edgeList) {
-			pointSet.add(new SortablePoint(e.getP1()));
-			pointSet.add(new SortablePoint(e.getP2()));
-		}
-		
-		if(pointSet.size()<=2) return null;
-		this.setCentroid(calculateCentroid(pointSet));
-
-		for(SortablePoint p:pointSet) {
-			float tanAngle = (float) Math.toDegrees((float) Math.atan2(p.y - getCentroid().y, p.x - getCentroid().x));
-			tanAngle = (float) VMath.modulo(tanAngle+360,360);
-			p.setAngle(tanAngle);
-		}
-		List<SortablePoint> sortedPoints = new ArrayList<SortablePoint>(pointSet);
-		Collections.sort(sortedPoints);  
-		for(SortablePoint p: sortedPoints) {
-			result.addPoint(p.x, p.y);			
+		if(polygon == null) {
+			polygon = new Polygon();
+			
+			List<Edge> edgeList = new ArrayList<Edge>(this.edgeSet);
+			Set<SortablePoint> pointSet = new HashSet<SortablePoint>();
+			for(Edge e: edgeList) {
+				pointSet.add(new SortablePoint(e.getP1()));
+				pointSet.add(new SortablePoint(e.getP2()));
+			}
+			
+			if(pointSet.size()<=2) return null;
+			this.setCentroid(calculateCentroid(pointSet));
+	
+			for(SortablePoint p:pointSet) {
+				float tanAngle = (float) Math.toDegrees((float) Math.atan2(p.y - getCentroid().y, p.x - getCentroid().x));
+				tanAngle = (float) VMath.modulo(tanAngle+360,360);
+				p.setAngle(tanAngle);
+			}
+			List<SortablePoint> sortedPoints = new ArrayList<SortablePoint>(pointSet);
+			Collections.sort(sortedPoints);  
+			for(SortablePoint p: sortedPoints) {
+				polygon.addPoint(p.x, p.y);			
+			}
 		}
 			
-		return result;
+		return polygon;
 	}
 
 	private Point calculateCentroid(Set<? extends Point> pointSet) {

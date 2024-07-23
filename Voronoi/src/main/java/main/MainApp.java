@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Polygon;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.geom.Point2D;
@@ -16,7 +18,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JViewport;
+import javax.swing.border.Border;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.context.ApplicationContext;
@@ -34,18 +40,20 @@ import gfxmain.VisSpect;
 import mapUtils.MapHelper;
 import met.METAR;
 import service.IVoronoiService;
+import stat.Station;
 
-public class MainApp extends JFrame implements FocusListener {
+public class MainApp extends JFrame implements FocusListener, AdjustmentListener {
 
 	// http://www.aviationweather.gov/dataserver
 	// http://www.qc.edu.hk/math/Advanced%20Level/circle%20given%203%20points.htm
 	// https://codegolf.stackexchange.com/questions/50299/draw-an-image-as-a-voronoi-map
 	// http://www.aviationweather.gov/dataserver
 	private GFXFramework gfx;
-	private final static int SCREEN_WIDTH = 1001;
-	private final static int SCREEN_HEIGHT = 1001;
+	private final static int SCREEN_WIDTH = 1200;
+	private final static int SCREEN_HEIGHT = 1150;
 	private MetarWrapperImpl grid[][];
 	private IVoronoiService service;
+
 
 	private Map<IMetarWrapper, Point2D.Float> pointMetarMap = new HashMap<IMetarWrapper, Point2D.Float>();
 
@@ -59,23 +67,45 @@ public class MainApp extends JFrame implements FocusListener {
 
 	public MainApp() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLayout(null);
+//		setLayout(null);
 		this.setBackground(Color.BLACK);
 		setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
+		setSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT)); 		
+		
 		try {
-			gfx = new GFXFramework(this, true);
+			gfx = new GFXFramework(this, true, new Dimension(5000,5000), true);
+//			gfx.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
 		} catch (GFXException e) {
 			e.printStackTrace();
 		}
+		
+   
+        gfx.getJScrollPane().getViewport().setBackground(Color.PINK);
+
 		gfx.addFocusListener(this);
 		gfx.init();
-		gfx.setAnimate(false);
+		gfx.setAnimate(false);       	
+		
+		gfx.getJScrollPane().getVerticalScrollBar().addAdjustmentListener(this);
+		gfx.getJScrollPane().getHorizontalScrollBar().addAdjustmentListener(this);
+		
+//		this.pack();
+		
+		this.setTitle(""+new java.util.Date());
 
 	}
 
 	public void execute() {
 		service = appContext.getBean(IVoronoiService.class);
-		List<METAR> metars = service.callWebService();
+		List<String>  statList = null;;
+		try {
+			statList = service.getStationList("K","C","P","T","M","S");
+//			statList = service.getStationList("K");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		List<METAR> metars = service.callWebService(statList);
 //    Collections.shuffle(metars);
 //    metars = metars.subList(0, 20);
 		grid = processMetars(metars);
@@ -87,16 +117,23 @@ public class MainApp extends JFrame implements FocusListener {
 		g2.setColor(Color.cyan);
 		for (int i = 0; i < grid.length; i++) {
 			for (int j = 0; j < grid[i].length; j++) {
-				if (grid[j][i] != null) {
-					g2.setColor(Color.cyan);
-//          g2.drawLine(j, i, j, i);
+				if (grid[i][j] != null) {
+					if(metarIsValid(grid[i][j].getMetar())) {
+						g2.setColor(Color.cyan);
+					}
+					else {
+						g2.setColor(Color.white);
+					}
+					g2.drawLine(i, j, i, j);
 				}
 			}
 		}
 
-		gfx.update();
+		gfx.getG2().setColor(Color.orange);
+		gfx.getG2().drawRect(2500, 2500, 50, 50);
+		gfx.update();		
 		gfx.setSaveImage();
-		gfx.setAnimate(true);
+//		gfx.setAnimate(true);
 		System.out.println("Done.");
 
 	}
@@ -166,7 +203,7 @@ public class MainApp extends JFrame implements FocusListener {
 			g2.setColor(Color.red);
 			if (p != null) {
 				g2.draw(p);
-				float mapVal = VisSpect.mapValueRangeIntoWavelengths(m1.getMetar().getAltimInHg(), 29.0f, 31f);
+				float mapVal = VisSpect.mapValueRangeIntoWavelengths(m1.getMetar().getAltimInHg(), 28.0f, 32f);
 				System.out.println(m1.getMetar().getAltimInHg() + " --- " + mapVal);
 				Color c = VisSpect.getSpectralColor(mapVal);
 				g2.setColor(c);
@@ -214,8 +251,12 @@ public class MainApp extends JFrame implements FocusListener {
 	}
 
 	private boolean metarIsValid(METAR m) {
-		return m.getLatitude() != null && m.getLongitude() != null && m.getAltimInHg() != null
-				&& Math.abs(m.getLatitude()) <= 90 && Math.abs(m.getLongitude()) <= 180;
+		return m.getLatitude() != null && 
+				m.getLongitude() != null && 
+				m.getAltimInHg() != null && 
+				Math.abs(m.getLatitude()) <= 90 && Math.abs(m.getLongitude()) <= 180 &&
+				m.getAltimInHg() > 20 &&
+				m.getAltimInHg() < 33;
 	}
 
 	@Override
@@ -226,6 +267,12 @@ public class MainApp extends JFrame implements FocusListener {
 	@Override
 	public void focusLost(FocusEvent e) {
 
+	}
+
+	@Override
+	public void adjustmentValueChanged(AdjustmentEvent e) {
+		gfx.update();	
+//		System.out.println(jsp.getViewport().getViewRect().x+" :  "+jsp.getViewport().getViewRect().y);
 	}
 
 }

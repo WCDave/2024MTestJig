@@ -8,7 +8,9 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.event.KeyAdapter;
@@ -18,11 +20,14 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
+import javax.swing.JScrollPane;
 import javax.swing.RootPaneContainer;
+import javax.swing.Scrollable;
+import javax.swing.SwingConstants;
 import javax.swing.event.MouseInputAdapter;
 
 
-public class GFXFramework extends Canvas {
+public class GFXFramework extends Canvas implements Scrollable {
 	private int key;
 	private boolean newKeyPressed;
 	private BufferStrategy bs;
@@ -34,6 +39,9 @@ public class GFXFramework extends Canvas {
 	private Color backgroundColor=Color.BLACK;
 	private MouseStates mouseState=MouseStates.NONE;
 	private Component parentComponent;
+	private JScrollPane jsp;
+	private int maxScroll=5;
+	private boolean scrollable;
 	
 	/**
 	 * Creates Graphics Framework Object
@@ -71,7 +79,56 @@ public class GFXFramework extends Canvas {
 		{
 			c.add(this);
 		}
+		c.setVisible(true);
 	}
+	
+	public GFXFramework(Container c, boolean animation, Dimension d, boolean scrollable) throws GFXException {
+		super();
+		this.scrollable = scrollable;
+		
+        
+		if(c==null)
+		{
+			throw new GFXException(null, GFXExceptionTypes.CONTAINER_NULL);
+		}
+		parentComponent=c;
+		if(scrollable) {
+			this.jsp = new JScrollPane();
+			jsp.setViewportView(this);
+			jsp.setSize(new Dimension(d.width-50, d.height-50));
+			c.remove(this);
+			c.add(jsp);
+		}
+		
+		if(c.getPreferredSize().width == 0)
+		{
+			throw new GFXException(c, GFXExceptionTypes.SIZE);
+		}
+		addKeyListener(new UserKeyInputAdapter());
+		UserMouseAdapter uma = new UserMouseAdapter();
+		addMouseListener(uma);	
+		//c.addKeyListener(new UserKeyInputAdapter());
+		addMouseMotionListener(uma); 
+		setSize(d);
+		c.setVisible(true);
+		jsp.setVisible(true);
+		backgroundColor = c.getBackground();
+		animBackgroundImg = new BufferedImage(d.width,d.height,BufferedImage.TYPE_INT_RGB);
+		backG2=(Graphics2D)animBackgroundImg.getGraphics();
+		numLockOn=Toolkit.getDefaultToolkit().getLockingKeyState(KeyEvent.VK_NUM_LOCK);
+		animationOn=animation;
+//		if(c instanceof RootPaneContainer) 
+//		{
+//			((RootPaneContainer)c).getContentPane().add(this);
+//		}
+//		else 
+//		{
+//			c.add(this);
+//		}
+		
+		
+	}
+	
 
 	
 	public KeyPadArrows getKeyPadCommand() {
@@ -122,17 +179,28 @@ public class GFXFramework extends Canvas {
 	 */
 	public void update(){	
 		Graphics2D g2=(Graphics2D)bs.getDrawGraphics();
-		g2.drawImage(animBackgroundImg, 0, 0, this);
+		if(getJScrollPane() != null) {
+			Rectangle visRec = getJScrollPane().getViewport().getViewRect();
+			System.out.println(visRec.x+", "+ visRec.y+", "+ (visRec.width)+", "+ (visRec.height));
+//			System.out.println(this.getBounds().x+", "+this.getBounds().y+", "+this.getBounds().width+", "+this.getBounds().height);
+			
+			g2.drawImage(animBackgroundImg.getSubimage(visRec.x, visRec.y, getSize().width-visRec.x, getSize().height-visRec.y),
+					     -2*visRec.x*getSize().width/visRec.width, -2*visRec.y*getSize().height/visRec.height, this);
+		}
+		else {
+			g2.drawImage(animBackgroundImg, 0, 0, this);
+		}
+		
 		if(animationOn)
 		{				
-			if(saveImage==null)
+			if(getSaveImage()==null)
 			{				
 				backG2.setBackground(backgroundColor);
 				backG2.clearRect(0, 0, getWidth(), getHeight());
 			}
 			else 
 			{
-				backG2.drawImage(saveImage, 0, 0, this);
+				backG2.drawImage(getSaveImage(), 0, 0, this);
 			}
 		}
 		bs.show();		
@@ -306,6 +374,79 @@ public class GFXFramework extends Canvas {
 	 */
 	public Color getBackgroundColor() {
 		return backgroundColor;
+	}
+
+
+	public BufferedImage getSaveImage() {
+		return saveImage;
+	}
+	
+	@Override
+	public Dimension getPreferredSize() {
+		if(this.animBackgroundImg == null) {
+			return super.getPreferredSize();
+		}
+		else {
+			return new Dimension(animBackgroundImg.getWidth(), animBackgroundImg.getHeight());
+		}
+	}
+
+
+
+	@Override
+	public Dimension getPreferredScrollableViewportSize() {
+		// TODO Auto-generated method stub
+		return this.getJScrollPane().getSize();
+	}
+
+
+
+	@Override
+	public int getScrollableUnitIncrement(Rectangle visibleRect, int orientation, int direction) {
+		int currentPosition = 0;
+		if (orientation == SwingConstants.HORIZONTAL) {
+			currentPosition = visibleRect.x;
+		} else {
+			currentPosition = visibleRect.y;
+		}
+		if (direction < 0) {
+			int newPosition = currentPosition - (currentPosition / maxScroll) * maxScroll;
+			return (newPosition == 0) ? maxScroll : newPosition;
+		} else {
+			return ((currentPosition / maxScroll) + 1) * maxScroll - currentPosition;
+		}
+	}
+
+
+
+	@Override
+	public int getScrollableBlockIncrement(Rectangle visibleRect, int orientation, int direction) {
+		if (orientation == SwingConstants.HORIZONTAL) {
+			return visibleRect.width-maxScroll;
+		}
+		else {
+			return visibleRect.height - maxScroll;
+		}
+	}
+
+
+
+	@Override
+	public boolean getScrollableTracksViewportWidth() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+
+	@Override
+	public boolean getScrollableTracksViewportHeight() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public JScrollPane getJScrollPane() {
+		return jsp;
 	}
 	
 }

@@ -1,26 +1,8 @@
 package orbits;
 
 
-import RVMath.VMath;
-import com.google.common.collect.MapMaker;
-
-import Foundation.Utils;
-import main.AbstractView;
-import main.Shadeable;
-
-import org.apache.commons.math3.util.FastMath;
-import org.apache.log4j.Logger;
-import org.apache.xmlbeans.impl.xb.xsdschema.Public;
-
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +11,14 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
+
+import org.apache.commons.math3.util.FastMath;
+import org.apache.log4j.Logger;
+
+import com.google.common.collect.MapMaker;
+
+import RVMath.VMath;
+import main.AbstractView;
 
 public class CachingFaceDetailerWithFuturesArray implements ICachingDetailer<Facet> {
 
