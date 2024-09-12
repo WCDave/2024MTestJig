@@ -2,6 +2,8 @@ package orbits.keplerian;
 
 import RVMath.VMath;
 import orbits.Abstract3DModelObject;
+import orbits.NavComputer;
+
 import org.apache.commons.math3.util.FastMath;
 import orbits.Planet;
 import java.util.Date;
@@ -77,9 +79,10 @@ public class KeplerCalc implements Callable<IOrbit> {
 		KeplerianElements ke = new KeplerianElements(a, e, i, RAAN, argp, TA, a3o.getCoordSys(), mu);
 		IOrbit orbit = new Orbit(ke);
 		if (displayData) {
-			System.out.println(new Date() + " -- " + (this.planet != null ?"*"+a3o.getName():a3o.getName())+ ": a=" + a + ", e=" + e + ", i="
-					+ FastMath.toDegrees(i) + ", RAAN=" + FastMath.toDegrees(RAAN) + ", argP="
-					+ FastMath.toDegrees(argp) + ", TA=" + FastMath.toDegrees(TA) + ", T=" + ke.getPeriod());
+			System.out.println(new Date() + " -- " + (this.planet != null ?"*"+a3o.getName():a3o.getName())+ ": a=" + String.format("%12.4f",a) + 
+					", e=" + String.format("%10.4f",e) + ", i="+ String.format("%9.4f",FastMath.toDegrees(i)) + 
+					", RAAN=" + String.format("%10.4f",FastMath.toDegrees(RAAN)) + ", argP="+ String.format("%10.4f",FastMath.toDegrees(argp)) + 
+					", TA=" + FastMath.toDegrees(TA) + ", T=" + ke.getPeriod()+", v="+String.format("%12.4f", v * 2.236f)+", r="+String.format("%12.4f",r/ NavComputer.METERS_PER_MILE));
 		}
 		return orbit;
 	}

@@ -26,7 +26,12 @@ public class ExternalViewPositioner implements IExtViewPositioner {
   public ExternalViewPositioner(String nameOfObject, CoordSys viewingSys, String objectToPointTo) {
     this.viewingSys = viewingSys;
     Abstract3DModelObject a3o = World3DContainer.getInstance().getItem(nameOfObject);
-    positionVectorOfObject = a3o.getCoordSys().getPositionVec();
+    if(a3o != null) {    
+    	positionVectorOfObject = a3o.getCoordSys().getPositionVec();   
+     }
+    else {
+    	positionVectorOfObject = viewingSys.getPositionVec();
+    }
     this.objectToPointTo = objectToPointTo;
   }
 

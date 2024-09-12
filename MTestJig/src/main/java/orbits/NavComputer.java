@@ -159,6 +159,18 @@ public class NavComputer extends AbstractInstrument {
 
       @Override
       public void cancel() {
+    	  Craft c = (Craft) World3DContainer.getInstance().getItem("Test1");
+    	  Rocket r = (Rocket) NavComputer.this.craft;
+    	  if(c != null) {
+    		  World3DContainer.getInstance().removeCraft(c);    		  
+    		  r.loadBay(c);
+    	  }
+    	  else {
+    		  GenericSatellite s = new GenericSatellite();
+    		    s.setMass(50000);
+    		    s.setName("Test1");
+    		    r.loadBay(s);
+    	  }
       }
 
       @Override
