@@ -41,7 +41,7 @@ public class GravityTurn extends AFCSTargetingStrategy {
 
     //long t0 = System.currentTimeMillis();
     c.adjustPitchRate(5.39f);
-    Utils.sleep(4000);
+    Utils.sleep(5000);
     c.nullRates();
     ((GravityTurnThrustOnlyCorridorControl)corridorControl).setBaselineThrustValue(computer.getControlAdapter().getThrottleSetting());
     //t.start();

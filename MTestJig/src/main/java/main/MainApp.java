@@ -515,7 +515,7 @@ public class MainApp extends JFrame {
             rocketView = new JRadioButtonMenuItem(ViewTypes.ROCKET.getDescription());
             rocketView.setAccelerator(KeyStroke.getKeyStroke("alt R"));
             geoSynchView = new JRadioButtonMenuItem(ViewTypes.GEOSYNCH.getDescription());
-            geoSynchView.setAccelerator(KeyStroke.getKeyStroke("alt G"));
+            geoSynchView.setAccelerator(KeyStroke.getKeyStroke("alt O"));
             ButtonGroup bGroup = new ButtonGroup();
             bGroup.add(slewView);
             bGroup.add(rocketView);

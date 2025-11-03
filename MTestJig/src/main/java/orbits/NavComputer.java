@@ -37,7 +37,7 @@ public class NavComputer extends AbstractInstrument {
    */
   private static final long serialVersionUID = 6612654233210919745L;
   public static final double METERS_PER_MILE = 1609.344;
-  public static final float G = (float) -6.672e-11;
+  public static final float G = (float) -6.6743e-11;
   public static final float EarthG = -G * (float) 5.99e24 / (float) Math.pow(6.37e6, 2);
   private Craft craft;
   private Graphics2D g2;
@@ -74,6 +74,8 @@ public class NavComputer extends AbstractInstrument {
 
   private CountDownLatch startUpLatch;
   private boolean isLaunched;
+  
+  private CountDownLatch circularizationLatch = new CountDownLatch(1);
 
   public NavComputer(CockPitView aView, CountDownLatch countDownLatch) {
     super(aView);
@@ -310,6 +312,7 @@ Answer = asin((cos(orbInc)/cos(lat)))            = 59.87768663486
         Utils.sleep(160000);
 
         log.debug("T5 - Int");
+       
         r.keyPress(KeyEvent.VK_ALT);
         Utils.sleep(1000);
         r.keyPress((KeyEvent.VK_V));
@@ -318,10 +321,12 @@ Answer = asin((cos(orbInc)/cos(lat)))            = 59.87768663486
         Utils.sleep(1000);
         r.keyRelease((KeyEvent.VK_V));
         Utils.sleep(1000);
-        Utils.sleep(400000);
+        try {
+			this.getCircularizationLatch().await();
+		} catch (InterruptedException e) {}
 
-        buttonExecutionHandler.click((GlassButton) ctrls.get("PC"), 10f);
-        buttonExecutionHandler.click((GlassButton) ctrls.get("SC"), 80f);
+        buttonExecutionHandler.click((GlassButton) ctrls.get("SC"), 8f);
+        buttonExecutionHandler.click((GlassButton) ctrls.get("PC"), 8f);
 
         log.debug("T6 - Ext");
         r.keyPress(KeyEvent.VK_ALT);
@@ -336,11 +341,11 @@ Answer = asin((cos(orbInc)/cos(lat)))            = 59.87768663486
         log.debug("T7 - ExtG");
         r.keyPress(KeyEvent.VK_ALT);
         Utils.sleep(1000);
-        r.keyPress((KeyEvent.VK_G));
+        r.keyPress((KeyEvent.VK_O));
         Utils.sleep(1000);
         r.keyRelease(KeyEvent.VK_ALT);
         Utils.sleep(1000);
-        r.keyRelease((KeyEvent.VK_G));
+        r.keyRelease((KeyEvent.VK_O));
         Utils.sleep(1000);
       } catch (AWTException e) {
         e.printStackTrace();
@@ -760,4 +765,8 @@ Answer = asin((cos(orbInc)/cos(lat)))            = 59.87768663486
   public Map<String, Component> getControlHash() {
     return controlHash;
   }
+
+public CountDownLatch getCircularizationLatch() {
+	return circularizationLatch;
+}
 }

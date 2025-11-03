@@ -3,7 +3,9 @@ package autopilot;
 import java.util.Date;
 
 import orbits.NavComputer;
+import orbits.Planet;
 import Foundation.Utils;
+import VMath.VMath;
 import enums.ControlInputSource;
 
 public class APEngineStartAndLaunch extends AFCSTargetingStrategy {
@@ -35,9 +37,10 @@ public class APEngineStartAndLaunch extends AFCSTargetingStrategy {
       Utils.sleep(1000);
     }
     computer.getControlAdapter().setThrottle(60);
-    //((Rocket)computer.getCraft()).setThrottleSetting(50);
+    while (VMath.mag(computer.getCraft().getCoordSys().getPositionVec()) < ((Planet) computer.getReferenceObject()).getRadius()+200) {
+    	Utils.sleep(20);
+    }
     computer.setAnnunMsg("Liftoff");
-    Utils.sleep(1000);
   }
 
   @Override

@@ -64,10 +64,12 @@ public class CircularizeProgram extends AFCSTargetingStrategy {
       computer.getControlAdapter().setThrottle(0);
       log.info("burn complete");
     }
+    
     rocket.setAutoPilotInhibit(false);
     computer.setAnnunMsg("OMS " + String.format("%2d", omsBurnNumber) + " Not Req");
     computer.setFlashAnnun(true);
     Utils.sleep(10000);
+    computer.getCircularizationLatch().countDown();
     try {
       executorService.submit(new KeplerCalc(rocket, computer.getReferenceObject(), true)).get().getKeplerianElements();
       executorService.submit(new KeplerCalc(computer.getReferenceObject(), true)).get().getKeplerianElements();

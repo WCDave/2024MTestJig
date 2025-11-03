@@ -45,12 +45,11 @@ public class DataPage_I extends NavComputerDisplay {
     int y = fm.getHeight() - 5;
     double pRadius = ((Planet) computer.getReferenceObject()).getRadius() / NavComputer.METERS_PER_MILE;
     bodyToObjectVec = VMath.vecSubtract(computer.getCraft().getCoordSys().getPositionVec(), computer.getReferenceObject().getCoordSys().getPositionVec());
+    alt = VMath.mag(bodyToObjectVec) / NavComputer.METERS_PER_MILE - pRadius;
 
     if (computer.getCraft() instanceof Rocket) {
       g2.drawString("Thr: " + String.format("%12d", (int) (computer.getControlAdapter().getThrottleSetting() * ((Rocket) computer.getCraft()).getEngPower() / 4450)), 3, y);
     }
-
-    alt = VMath.mag(bodyToObjectVec) / NavComputer.METERS_PER_MILE - pRadius;
 
     g2.drawString("Alt: " + String.format("%12.4f", alt), 2, 2 * y);
 
